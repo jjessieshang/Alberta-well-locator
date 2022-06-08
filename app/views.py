@@ -7,3 +7,7 @@ from flask import render_template
 def home():
 
     return render_template("index.html")
+
+@app.route("/form/", methods=["POST","GET"])
+def form():
+    return render_template("uwiForm.html")
