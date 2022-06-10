@@ -262,7 +262,7 @@ def mapping():
     well_location_list = df_well_locations.values.tolist()
     well_location_list_size = len(well_location_list)
 
-    #MARKERS
+    #MARKERS, if over a threshold, start clustering well markers
     if display <= 20:
         for point in range(0, display):
             folium.Marker(well_location_list[point],
