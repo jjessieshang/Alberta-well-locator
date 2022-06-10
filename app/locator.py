@@ -4,8 +4,8 @@ import sqlite3
 import pandas as pd
 import numpy as np
 from math import radians, cos, sin, asin, sqrt
-from folium.plugins import Fullscreen
-from flask import Flask, request
+from folium.plugins import Fullscreen, MarkerCluster
+from flask import request
 
 # conn = sqlite3.connect('ats.sqlite')
 
@@ -78,6 +78,9 @@ def mapping():
     md  = request.args.get('md')
 
     UWI_number = [int(md),int(rg),int(twp),int(sc),int(lsd)]
+
+    display  = request.args.get('display')
+    display = int(display)
 
     #sectional matrix
     arr = np.arange(1,37)
@@ -217,13 +220,13 @@ def mapping():
         directory.loc[index, "Distance (km)"] = haversine(long1, lati1, row['Longitude'], row['Latitude'])
         
     # sort the distance values in ascending order, closest well site to furthest well site
-    directory.sort_values(by = ['Distance (km)'],
+    directory = directory.sort_values(by = ['Distance (km)'],
                         axis = 0,
                         ascending = True)
 
     # Implementing Folium Map
-    m = folium.Map(location=[55,-115], tiles =None,
-                    zoom_start=5)
+    m = folium.Map(location=[lati1,-long1], tiles =None,
+                    zoom_start=7)
 
     # map tiles - light map, satellite, topography, alberta geoJson
     borderStyle={
@@ -244,7 +247,7 @@ def mapping():
     folium.TileLayer('https://api.maptiler.com/maps/hybrid/256/{z}/{x}/{y}.jpg?key=D1R440GkNxYWsQt9rTf3', 
                  name = 'Satellite',
                  attr= 'Esri_WorldImagery').add_to(m)
-    folium.LayerControl().add_to(m)
+
 
     #df column with rounded numbers and units
     directory['Print Distance']=directory['Distance (km)']
@@ -260,12 +263,22 @@ def mapping():
     well_location_list_size = len(well_location_list)
 
     #MARKERS
-    for point in range(0, well_location_list_size):
-        folium.Marker(well_location_list[point],
-                    icon=folium.Icon(icon='glyphicon-star', icon_color='white', color='green'),
-                    tooltip=directory.iloc[point]['Directory'],
-                    popup=folium.Popup(directory.iloc[point]['Print Distance'], max_width=500)
-                    ).add_to(m)
+    if display <= 20:
+        for point in range(0, display):
+            folium.Marker(well_location_list[point],
+                        icon=folium.Icon(icon='glyphicon-star', icon_color='white', color='green'),
+                        tooltip=directory.iloc[point]['Directory'],
+                        popup=folium.Popup(directory.iloc[point]['Print Distance'], max_width=500)
+                        ).add_to(m)
+    
+    else:
+        marker_cluster = MarkerCluster(name="Clusters").add_to(m)
+        for point in range(0, well_location_list_size):
+            folium.Marker(well_location_list[point],
+                        icon=folium.Icon(icon='glyphicon-star', icon_color='white', color='green'),
+                        tooltip=directory.iloc[point]['Directory'],
+                        popup=folium.Popup(directory.iloc[point]['Print Distance'], max_width=500)
+                        ).add_to(marker_cluster)
 
     inputLong =long1*-1
 
@@ -283,7 +296,7 @@ def mapping():
                     icon=folium.Icon(icon='glyphicon-star', color='cadetblue'),
                     ).add_to(m)
 
-
+    folium.LayerControl().add_to(m)
     fs = Fullscreen()
     m.add_child(fs)  # adding fullscreen button to map
 
