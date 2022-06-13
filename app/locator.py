@@ -225,8 +225,8 @@ def mapping():
                         ascending = True)
 
     # Implementing Folium Map
-    m = folium.Map(location=[lati1,-long1], tiles =None,
-                    zoom_start=7)
+    m = folium.Map(location=[55,-115], tiles =None,
+                    zoom_start=6)
 
     # map tiles - light map, satellite, topography, alberta geoJson
     borderStyle={
