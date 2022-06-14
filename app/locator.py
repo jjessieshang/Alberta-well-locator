@@ -3,6 +3,7 @@ import folium
 import sqlite3
 import pandas as pd
 import numpy as np
+import branca
 from math import radians, cos, sin, asin, sqrt
 from folium.plugins import Fullscreen, MarkerCluster
 from flask import request
@@ -193,6 +194,64 @@ def mapping():
         r = 6371 # Radius of earth in kilometers. Use 3956 for miles. Determines return value units.
         return c * r
 
+    def popup_html(row):
+        i = row
+        well_name=directory.iloc[point]['Directory']
+        print_distance=directory.iloc[point]['Print Distance']
+
+        html = """
+        <!DOCTYPE html>
+        <html lang="en">
+        <head> 
+            <h5 style="margin-bottom:10;
+                       text-align: center";
+                width="200px"
+                >{}</h5>""".format(well_name) + """
+        </head>
+        <body>
+            <table>
+                <tr>
+                    <th style="padding: 5px 15px;
+                               background-color: #c3cbcc;
+                               color: #fff;
+                               text-align: center;
+                               letter-spacing: 0.7px;">Property</th>
+                    <th style="padding: 5px 15px;
+                               background-color: #c3cbcc;
+                               color: #fff;
+                               text-align: center;
+                               letter-spacing: 0.7px">Value</th>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 15px;
+                               background-color: #fff;">Distance: </td>
+                    <td style="padding: 5px 15px;
+                               background-color: #fff">{}</td>""".format(print_distance) + """
+                </tr>
+                <tr>
+                    <td style="padding: 5px 15px;
+                               background-color: #eeeeee">Field: </td>
+                    <td style="padding: 5px 15px;
+                               background-color: #eeeeee">{}</td>""".format(print_distance) + """
+                </tr>
+                                <tr>
+                    <td style="padding: 5px 15px;
+                               background-color: #fff;">Stress: </td>
+                    <td style="padding: 5px 15px;
+                               background-color: #fff">{}</td>""".format(print_distance) + """
+                </tr>
+                <tr>
+                    <td style="padding: 5px 15px;
+                               background-color: #eeeeee">Strain: </td>
+                    <td style="padding: 5px 15px;
+                               background-color: #eeeeee">{}</td>""".format(print_distance) + """
+                </tr>
+            </table>
+        </body>
+        </html>
+        """
+        return html
+
     # #MAIN TERMINAL CODE
     UWI_list = UWI_number
 
@@ -252,7 +311,7 @@ def mapping():
     #df column with rounded numbers and units
     directory['Print Distance']=directory['Distance (km)']
     directory['Print Distance']=directory['Print Distance'].round(decimals=2)
-    directory['Print Distance']='<strong>Distance: </strong>' + directory['Print Distance'].astype(str) + ' km'
+    directory['Print Distance']=directory['Print Distance'].astype(str) + ' km'
     directory
 
     df_well_locations = directory.copy()
@@ -263,22 +322,27 @@ def mapping():
     well_location_list_size = len(well_location_list)
 
     #MARKERS, if over a threshold, start clustering well markers
+
     if display <= 20:
         for point in range(0, display):
+            html = popup_html(point)
+            iframe = branca.element.IFrame(html=html,width=510,height=280)
+            popup_table = folium.Popup(folium.Html(html, script=True), max_width=500)
             folium.Marker(well_location_list[point],
                         icon=folium.Icon(icon='glyphicon-star', icon_color='white', color='green'),
                         tooltip=directory.iloc[point]['Directory'],
-                        popup=folium.Popup(directory.iloc[point]['Print Distance'], max_width=500)
-                        ).add_to(m)
+                        popup=popup_table).add_to(m)
     
     else:
         marker_cluster = MarkerCluster(name="Clusters").add_to(m)
         for point in range(0, well_location_list_size):
+            html = popup_html(point)
+            iframe = branca.element.IFrame(html=html,width=510,height=280)
+            popup_table = folium.Popup(folium.Html(html, script=True), max_width=500)
             folium.Marker(well_location_list[point],
                         icon=folium.Icon(icon='glyphicon-star', icon_color='white', color='green'),
                         tooltip=directory.iloc[point]['Directory'],
-                        popup=folium.Popup(directory.iloc[point]['Print Distance'], max_width=500)
-                        ).add_to(marker_cluster)
+                        popup=popup_table).add_to(marker_cluster)
 
     inputLong =long1*-1
 
