@@ -195,6 +195,9 @@ def mapping():
         return c * r
 
     def popup_html(row):
+        """
+        Inserting HTML and CSS styles into folium popups for well properties
+        """
         i = row
         well_name=directory.iloc[point]['Directory']
         print_distance=directory.iloc[point]['Print Distance']
