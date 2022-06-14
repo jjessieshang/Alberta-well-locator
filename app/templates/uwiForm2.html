@@ -4,12 +4,12 @@
     <meta charset="UTF-8"> 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitCan Well Locator</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Home/IndexStyle.css')}}">
+    <title>UWI Calculator</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Form/formStyle.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <nav class="navbar">
@@ -25,22 +25,20 @@
                     <a href="/" class="navbar__links">Home</a>
                 </li>
                 <li class="navbar__item">
-                    <a href="/form" class="navbar__links">Locator</a>
+                    <a href="/option" class="navbar__links">Locator</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- Message -->
-    <div class="error">
-        <div class="error__container">
-            <div class="error__content">
-                    <h1>Oops!</h1>
-                    <p>The page you were looking for does not exist</p>
-            </div>
-        </div>
-    </div>
 
+    <!-- User input for well ID -->
+    <div class ="form">
+        <div class ="form__container">
+            <div class="form__title">Alberta Well Locator</div>
+
+        </div>
+    </div>  
     <script src="{{ url_for('static', filename='JS/app.js') }}"></script>
 </body>
 </html>
