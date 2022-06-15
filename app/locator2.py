@@ -6,63 +6,11 @@ import numpy as np
 import branca
 from math import radians, cos, sin, asin, sqrt
 from folium.plugins import Fullscreen, MarkerCluster
-from flask import request
-
-# conn = sqlite3.connect('ats.sqlite')
-
-# #(executed once to import csv into sqlite)
-# #importing dataframe1
-# ATS = pd.read_csv('~/Desktop/OneDrive - BitCan/Mapping Program/ATS.csv', sep =',')
-# ATS = ATS.drop('Unnamed: 3',axis = 1)
-
-# #importing dataframe2
-# directory = pd.read_csv('~/Desktop/OneDrive - BitCan/Mapping Program/ATS_directory.csv', sep =',')
-# directory = directory.drop('Unnamed: 10',axis = 1)
-# directory = directory.drop('Unnamed: 11',axis = 1)
-# directory = directory.drop('Unnamed: 12',axis = 1)
-# directory = directory.drop('Unnamed: 13',axis = 1)
-# directory = directory.drop('Unnamed: 14',axis = 1)
-# directory = directory.drop('Unnamed: 15',axis = 1)
-# directory = directory.drop('Unnamed: 16',axis = 1)
-# directory = directory.drop('Unnamed: 17',axis = 1)
-# directory = directory.drop(index = 28)
-# directory = directory.drop(index = 29)
-
-# #insert df into sql 
-# ATS.to_sql(
-#     name= 'ATS',
-#     con= conn,
-#     if_exists= 'replace',
-#     index= False,
-#     dtype={'UWI': 'text',
-#            'Latitude': 'real',
-#            'Longitude': 'real'}
-# )
-
-# directory.to_sql(
-#     name= 'directory',
-#     con= conn,
-#     if_exists= 'replace',
-#     index= False,
-#     dtype={'Directory': 'text',
-#            'LSD': 'real',
-#            'SC': 'real',
-#            'TWP': 'real',
-#            'RG': 'real',
-#            'W': 'text',
-#            'M': 'real',
-#            'adjusted_UWI': 'text',
-#            'Latitude': 'real',
-#            'Longitude': 'real',
-#            'Distance (km)': 'real'}
-# )
-
-# conn.commit()
-# conn.close()
+from flask import render_template, request
 
 
-@app.route('/form/mapping/')
-def mapping():
+@app.route('/form2/mapping/')
+def mapping2():
 
     #database to local dataframe
     conn = sqlite3.connect('ats.sqlite')
@@ -71,17 +19,43 @@ def mapping():
     directory = pd.read_sql_query("SELECT * FROM directory", con=conn)
     conn.close()
 
-    #form input
-    lsd = request.args.get('lsd')
-    sc  = request.args.get('sc')
-    rg  = request.args.get('rg')
-    twp  = request.args.get('twp')
-    md  = request.args.get('md')
+    #manual user input
+    input_uwi = request.args.get('input_uwi')
 
-    UWI_number = [int(md),int(rg),int(twp),int(sc),int(lsd)]
+    input_UWI = input_uwi.split('-')
+
+    LSD = input_UWI[0]
+    sc = input_UWI[1]
+    twp = input_UWI[2]
+
+    last = input_UWI[3].split('W')
+    rg = last[0]
+    M = last[1]
+
+    UWI_number = [int(M),int(rg),int(twp),int(sc),int(LSD)]
 
     display  = request.args.get('display')
     display = int(display)
+
+    #property display selection
+    distance = request.args.get('distance')
+    stress  = request.args.get('stress')
+    young  = request.args.get('young')
+
+    if distance is None:
+        distance = 0
+    else:
+        distance = int(distance)
+
+    if stress is None:
+        stress = 0
+    else:
+        stress = int(stress)
+
+    if young is None:
+        young = 0
+    else:
+        young= int(young)
 
     #sectional matrix
     arr = np.arange(1,37)
@@ -194,66 +168,69 @@ def mapping():
         r = 6371 # Radius of earth in kilometers. Use 3956 for miles. Determines return value units.
         return c * r
 
-    def popup_html(row):
-        """
-        Inserting HTML and CSS styles into folium popups for well properties
-        """
-        i = row
-        well_name=directory.iloc[point]['Directory']
-        print_distance=directory.iloc[point]['Print Distance']
+    # def popup_html(row):
+    #     """
+    #     Inserting HTML and CSS styles into folium popups for well properties
+    #     """
+    #     i = row
+    #     well_name=directory.iloc[point]['Directory']
+    #     print_distance=directory.iloc[point]['Print Distance']
 
-        html = """
-        <!DOCTYPE html>
-        <html lang="en">
-        <head> 
-            <h5 style="margin-bottom:10;
-                       text-align: center";
-                width="200px"
-                >{}</h5>""".format(well_name) + """
-        </head>
-        <body>
-            <table>
-                <tr>
-                    <th style="padding: 5px 15px;
-                               background-color: #c3cbcc;
-                               color: #fff;
-                               text-align: center;
-                               letter-spacing: 0.7px;">Property</th>
-                    <th style="padding: 5px 15px;
-                               background-color: #c3cbcc;
-                               color: #fff;
-                               text-align: center;
-                               letter-spacing: 0.7px">Value</th>
-                </tr>
-                <tr>
-                    <td style="padding: 5px 15px;
-                               background-color: #fff;">Distance: </td>
-                    <td style="padding: 5px 15px;
-                               background-color: #fff">{}</td>""".format(print_distance) + """
-                </tr>
-                <tr>
-                    <td style="padding: 5px 15px;
-                               background-color: #eeeeee">Field: </td>
-                    <td style="padding: 5px 15px;
-                               background-color: #eeeeee">{}</td>""".format(print_distance) + """
-                </tr>
-                                <tr>
-                    <td style="padding: 5px 15px;
-                               background-color: #fff;">Stress: </td>
-                    <td style="padding: 5px 15px;
-                               background-color: #fff">{}</td>""".format(print_distance) + """
-                </tr>
-                <tr>
-                    <td style="padding: 5px 15px;
-                               background-color: #eeeeee">Strain: </td>
-                    <td style="padding: 5px 15px;
-                               background-color: #eeeeee">{}</td>""".format(print_distance) + """
-                </tr>
-            </table>
-        </body>
-        </html>
-        """
-        return html
+    #     html = """
+    #     <!DOCTYPE html>
+    #     <html lang="en">
+    #     <head> 
+    #         <h5 style="margin-bottom:10;
+    #                    text-align: center";
+    #             width="200px"
+    #             >{}</h5>""".format(well_name) + """
+    #     </head>
+    #     <body>
+    #         <table>
+    #             <tr>
+    #                 <th style="padding: 5px 15px;
+    #                            background-color: #c3cbcc;
+    #                            color: #fff;
+    #                            text-align: center;
+    #                            letter-spacing: 0.7px;">Property</th>
+    #                 <th style="padding: 5px 15px;
+    #                            background-color: #c3cbcc;
+    #                            color: #fff;
+    #                            text-align: center;
+    #                            letter-spacing: 0.7px">Value</th>
+    #             </tr>
+    #             <tr>
+    #                 <td style="padding: 5px 15px;
+    #                            background-color: #fff;">Distance: </td>
+    #                 <td style="padding: 5px 15px;
+    #                            background-color: #fff">{}</td>""".format(print_distance) + """
+    #             </tr>
+    #             <tr>
+    #                 <td style="padding: 5px 15px;
+    #                            background-color: #eeeeee">Field: </td>
+    #                 <td style="padding: 5px 15px;
+    #                            background-color: #eeeeee">{}</td>""".format(print_distance) + """
+    #             </tr>
+    #                             <tr>
+    #                 <td style="padding: 5px 15px;
+    #                            background-color: #fff;">Stress: </td>
+    #                 <td style="padding: 5px 15px;
+    #                            background-color: #fff">{}</td>""".format(print_distance) + """
+    #             </tr>
+    #             <tr>
+    #                 <td style="padding: 5px 15px;
+    #                            background-color: #eeeeee">Strain: </td>
+    #                 <td style="padding: 5px 15px;
+    #                            background-color: #eeeeee">{}</td>""".format(print_distance) + """
+    #             </tr>
+    #         </table>
+    #         {% if dist==True %}
+    #             <p>Hello</p>
+    #         {% endif %}
+    #     </body>
+    #     </html>
+    #     """
+    #     return html
 
     # #MAIN TERMINAL CODE
     UWI_list = UWI_number
@@ -328,7 +305,27 @@ def mapping():
 
     if display <= 20:
         for point in range(0, display):
-            html = popup_html(point)
+            print_dist=0
+            dist=False
+            print_strs=0
+            strs=False
+            print_yg=0
+            yg=False
+            nm=directory.iloc[point]['Directory']
+
+            if distance==1:
+                dist=True
+                print_dist=directory.iloc[point]['Print Distance']
+
+            if stress==1:
+                strs=True
+                print_strs=directory.iloc[point]['Print Distance']
+
+            if young==1:
+                yg=True
+                print_yg=directory.iloc[point]['Print Distance']
+
+            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
             iframe = branca.element.IFrame(html=html,width=510,height=280)
             popup_table = folium.Popup(folium.Html(html, script=True), max_width=500)
             folium.Marker(well_location_list[point],

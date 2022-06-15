@@ -36,7 +36,42 @@
     <div class ="form">
         <div class ="form__container">
             <div class="form__title">Alberta Well Locator</div>
-
+            <form action="mapping" method="GET">
+                <div class="form__top">
+                    <div class="input-box">
+                        <span class="location">Location of Interest</span>
+                        <input type="text" placeholder="Enter UWI" name="input_uwi" id="input_uwi" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="displayNumber">Nearby Wells</span>
+                        <select class="select2" name="display" id="display" required>
+                            <option value="">Display</option>
+                            <option value="10">Map nearest 10</option>
+                            <option value="20">Map nearest 20</option>
+                            <option value="100">Map All</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form__bottom">
+                    <span class="choose-properties">Which Properties would you like to view?</span>
+                    <div class="property">
+                        <input type="checkbox" id="distance" name="distance" value="1"/>
+                        <label for="distance">Distance</label>
+                    </div>
+                    <div class="property">
+                        <input type="checkbox" id="stress" name="stress" value="1"/>
+                        <label for="stress">Stress</label>
+                    </div>
+                    <div class="property">
+                        <input type="checkbox" id="young" name="young" value="1"/>
+                        <label for="young">Young</label>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button class="reset-btn" type="reset">Reset</button>
+                    <button class="submit-btn" type="submit">Launch Map</button>
+                </div>
+            </form>
         </div>
     </div>  
     <script src="{{ url_for('static', filename='JS/app.js') }}"></script>

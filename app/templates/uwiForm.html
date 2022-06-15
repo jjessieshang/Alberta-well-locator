@@ -40,7 +40,8 @@
     <div class ="form">
         <div class ="form__container">
             <div class="form__title">Alberta Well Locator</div>
-            <form action="mapping" method="GET">
+            <!-- <form action="mapping" method="GET"> -->
+            <form action="{{ url_for('mapping') }}" method="GET">
                 <div class="form__details">
                     <div class="form__select-box">
                         <select required class="select" name="lsd" id="lsd">
