@@ -19,7 +19,7 @@ def mapping2():
     directory = pd.read_sql_query("SELECT * FROM directory", con=conn)
     conn.close()
 
-    #manual user input
+    #UWI input string processing
     input_uwi = request.args.get('input_uwi')
 
     input_UWI = input_uwi.split('-')
@@ -37,7 +37,7 @@ def mapping2():
     display  = request.args.get('display')
     display = int(display)
 
-    #property display selection
+    #property display selection value assignmnet
     distance = request.args.get('distance')
     stress  = request.args.get('stress')
     young  = request.args.get('young')
@@ -57,7 +57,7 @@ def mapping2():
     else:
         young= int(young)
 
-    #sectional matrix
+    #sectional ATS numpy matrix
     arr = np.arange(1,37)
     arr = np.sort(arr)[::-1]
     arr = arr.reshape(6,6)
@@ -168,71 +168,7 @@ def mapping2():
         r = 6371 # Radius of earth in kilometers. Use 3956 for miles. Determines return value units.
         return c * r
 
-    # def popup_html(row):
-    #     """
-    #     Inserting HTML and CSS styles into folium popups for well properties
-    #     """
-    #     i = row
-    #     well_name=directory.iloc[point]['Directory']
-    #     print_distance=directory.iloc[point]['Print Distance']
-
-    #     html = """
-    #     <!DOCTYPE html>
-    #     <html lang="en">
-    #     <head> 
-    #         <h5 style="margin-bottom:10;
-    #                    text-align: center";
-    #             width="200px"
-    #             >{}</h5>""".format(well_name) + """
-    #     </head>
-    #     <body>
-    #         <table>
-    #             <tr>
-    #                 <th style="padding: 5px 15px;
-    #                            background-color: #c3cbcc;
-    #                            color: #fff;
-    #                            text-align: center;
-    #                            letter-spacing: 0.7px;">Property</th>
-    #                 <th style="padding: 5px 15px;
-    #                            background-color: #c3cbcc;
-    #                            color: #fff;
-    #                            text-align: center;
-    #                            letter-spacing: 0.7px">Value</th>
-    #             </tr>
-    #             <tr>
-    #                 <td style="padding: 5px 15px;
-    #                            background-color: #fff;">Distance: </td>
-    #                 <td style="padding: 5px 15px;
-    #                            background-color: #fff">{}</td>""".format(print_distance) + """
-    #             </tr>
-    #             <tr>
-    #                 <td style="padding: 5px 15px;
-    #                            background-color: #eeeeee">Field: </td>
-    #                 <td style="padding: 5px 15px;
-    #                            background-color: #eeeeee">{}</td>""".format(print_distance) + """
-    #             </tr>
-    #                             <tr>
-    #                 <td style="padding: 5px 15px;
-    #                            background-color: #fff;">Stress: </td>
-    #                 <td style="padding: 5px 15px;
-    #                            background-color: #fff">{}</td>""".format(print_distance) + """
-    #             </tr>
-    #             <tr>
-    #                 <td style="padding: 5px 15px;
-    #                            background-color: #eeeeee">Strain: </td>
-    #                 <td style="padding: 5px 15px;
-    #                            background-color: #eeeeee">{}</td>""".format(print_distance) + """
-    #             </tr>
-    #         </table>
-    #         {% if dist==True %}
-    #             <p>Hello</p>
-    #         {% endif %}
-    #     </body>
-    #     </html>
-    #     """
-    #     return html
-
-    # #MAIN TERMINAL CODE
+    # #MAIN TERMINAL CODE...more uwi manipulation
     UWI_list = UWI_number
 
     UWI, co = lsdToQuarter(UWI_list)
@@ -297,19 +233,19 @@ def mapping2():
     df_well_locations = directory.copy()
     df_well_locations['Longitude']*= -1
     df_well_locations = df_well_locations.drop(columns=['Directory', 'LSD','SC','TWP','RG','W','M','adjusted_UWI','Distance (km)','Print Distance'])
+    
     # df_well_locations
     well_location_list = df_well_locations.values.tolist()
     well_location_list_size = len(well_location_list)
 
     #MARKERS, if over a threshold, start clustering well markers
-
     if display <= 20:
         for point in range(0, display):
             print_dist=0
-            dist=False
             print_strs=0
-            strs=False
             print_yg=0
+            dist=False
+            strs=False
             yg=False
             nm=directory.iloc[point]['Directory']
 
@@ -336,7 +272,26 @@ def mapping2():
     else:
         marker_cluster = MarkerCluster(name="Clusters").add_to(m)
         for point in range(0, well_location_list_size):
-            html = popup_html(point)
+            print_dist=0
+            print_strs=0
+            print_yg=0
+            dist=False
+            strs=False
+            yg=False
+            nm=directory.iloc[point]['Directory']
+
+            if distance==1:
+                dist=True
+                print_dist=directory.iloc[point]['Print Distance']
+
+            if stress==1:
+                strs=True
+                print_strs=directory.iloc[point]['Print Distance']
+
+            if young==1:
+                yg=True
+                print_yg=directory.iloc[point]['Print Distance']
+            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
             iframe = branca.element.IFrame(html=html,width=510,height=280)
             popup_table = folium.Popup(folium.Html(html, script=True), max_width=500)
             folium.Marker(well_location_list[point],
@@ -346,7 +301,7 @@ def mapping2():
 
     inputLong =long1*-1
 
-    #markers for location of interest
+    #circular area marker for location of interest
     folium.Circle(
         radius=50000,
         location=[lati1,inputLong],
@@ -360,12 +315,8 @@ def mapping2():
                     icon=folium.Icon(icon='glyphicon-star', color='cadetblue'),
                     ).add_to(m)
 
-    folium.LayerControl().add_to(m)
+    folium.LayerControl().add_to(m) #add layer selection ability
     fs = Fullscreen()
     m.add_child(fs)  # adding fullscreen button to map
 
     return m._repr_html_()
-
-
-
-
