@@ -6,7 +6,7 @@ import numpy as np
 import branca
 from math import radians, cos, sin, asin, sqrt
 from folium.plugins import Fullscreen, MarkerCluster
-from flask import request
+from flask import request, render_template
 
 # conn = sqlite3.connect('ats.sqlite')
 
@@ -82,6 +82,26 @@ def mapping():
 
     display  = request.args.get('display')
     display = int(display)
+
+    #property display selection value assignmnet
+    distance = request.args.get('distance')
+    stress  = request.args.get('stress')
+    young  = request.args.get('young')
+
+    if distance is None:
+        distance = 0
+    else:
+        distance = int(distance)
+
+    if stress is None:
+        stress = 0
+    else:
+        stress = int(stress)
+
+    if young is None:
+        young = 0
+    else:
+        young= int(young)
 
     #sectional matrix
     arr = np.arange(1,37)
@@ -194,67 +214,6 @@ def mapping():
         r = 6371 # Radius of earth in kilometers. Use 3956 for miles. Determines return value units.
         return c * r
 
-    def popup_html(row):
-        """
-        Inserting HTML and CSS styles into folium popups for well properties
-        """
-        i = row
-        well_name=directory.iloc[point]['Directory']
-        print_distance=directory.iloc[point]['Print Distance']
-
-        html = """
-        <!DOCTYPE html>
-        <html lang="en">
-        <head> 
-            <h5 style="margin-bottom:10;
-                       text-align: center";
-                width="200px"
-                >{}</h5>""".format(well_name) + """
-        </head>
-        <body>
-            <table>
-                <tr>
-                    <th style="padding: 5px 15px;
-                               background-color: #c3cbcc;
-                               color: #fff;
-                               text-align: center;
-                               letter-spacing: 0.7px;">Property</th>
-                    <th style="padding: 5px 15px;
-                               background-color: #c3cbcc;
-                               color: #fff;
-                               text-align: center;
-                               letter-spacing: 0.7px">Value</th>
-                </tr>
-                <tr>
-                    <td style="padding: 5px 15px;
-                               background-color: #fff;">Distance: </td>
-                    <td style="padding: 5px 15px;
-                               background-color: #fff">{}</td>""".format(print_distance) + """
-                </tr>
-                <tr>
-                    <td style="padding: 5px 15px;
-                               background-color: #eeeeee">Field: </td>
-                    <td style="padding: 5px 15px;
-                               background-color: #eeeeee">{}</td>""".format(print_distance) + """
-                </tr>
-                                <tr>
-                    <td style="padding: 5px 15px;
-                               background-color: #fff;">Stress: </td>
-                    <td style="padding: 5px 15px;
-                               background-color: #fff">{}</td>""".format(print_distance) + """
-                </tr>
-                <tr>
-                    <td style="padding: 5px 15px;
-                               background-color: #eeeeee">Strain: </td>
-                    <td style="padding: 5px 15px;
-                               background-color: #eeeeee">{}</td>""".format(print_distance) + """
-                </tr>
-            </table>
-        </body>
-        </html>
-        """
-        return html
-
     # #MAIN TERMINAL CODE
     UWI_list = UWI_number
 
@@ -326,9 +285,29 @@ def mapping():
 
     #MARKERS, if over a threshold, start clustering well markers
 
-    if display <= 20:
+    if display <= 30:
         for point in range(0, display):
-            html = popup_html(point)
+            print_dist=0
+            print_strs=0
+            print_yg=0
+            dist=False
+            strs=False
+            yg=False
+            nm=directory.iloc[point]['Directory']
+
+            if distance==1:
+                dist=True
+                print_dist=directory.iloc[point]['Print Distance']
+
+            if stress==1:
+                strs=True
+                print_strs=directory.iloc[point]['Print Distance']
+
+            if young==1:
+                yg=True
+                print_yg=directory.iloc[point]['Print Distance']
+
+            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
             iframe = branca.element.IFrame(html=html,width=510,height=280)
             popup_table = folium.Popup(folium.Html(html, script=True), max_width=500)
             folium.Marker(well_location_list[point],
@@ -336,17 +315,36 @@ def mapping():
                         tooltip=directory.iloc[point]['Directory'],
                         popup=popup_table).add_to(m)
     
+    
     else:
         marker_cluster = MarkerCluster(name="Clusters").add_to(m)
         for point in range(0, well_location_list_size):
-            html = popup_html(point)
+            print_dist=0
+            print_strs=0
+            print_yg=0
+            dist=False
+            strs=False
+            yg=False
+            nm=directory.iloc[point]['Directory']
+
+            if distance==1:
+                dist=True
+                print_dist=directory.iloc[point]['Print Distance']
+
+            if stress==1:
+                strs=True
+                print_strs=directory.iloc[point]['Print Distance']
+
+            if young==1:
+                yg=True
+                print_yg=directory.iloc[point]['Print Distance']
+            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
             iframe = branca.element.IFrame(html=html,width=510,height=280)
             popup_table = folium.Popup(folium.Html(html, script=True), max_width=500)
             folium.Marker(well_location_list[point],
                         icon=folium.Icon(icon='glyphicon-star', icon_color='white', color='green'),
                         tooltip=directory.iloc[point]['Directory'],
                         popup=popup_table).add_to(marker_cluster)
-
     inputLong =long1*-1
 
     #markers for location of interest

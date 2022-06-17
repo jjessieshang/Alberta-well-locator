@@ -239,7 +239,7 @@ def mapping2():
     well_location_list_size = len(well_location_list)
 
     #MARKERS, if over a threshold, start clustering well markers
-    if display <= 20:
+    if display <= 30:
         for point in range(0, display):
             print_dist=0
             print_strs=0
