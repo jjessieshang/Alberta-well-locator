@@ -232,7 +232,7 @@ def mapping2():
 
     df_well_locations = directory.copy()
     df_well_locations['Longitude']*= -1
-    df_well_locations = df_well_locations.drop(columns=['Directory', 'LSD','SC','TWP','RG','W','M','adjusted_UWI','Distance (km)','Print Distance'])
+    df_well_locations = df_well_locations.drop(columns=['Directory', 'LSD','SC','TWP','RG','W','M','adjusted_UWI','Distance (km)','Print Distance', 'stress'])
     
     # df_well_locations
     well_location_list = df_well_locations.values.tolist()
@@ -255,7 +255,7 @@ def mapping2():
 
             if stress==1:
                 strs=True
-                print_strs=directory.iloc[point]['Print Distance']
+                print_strs=directory.iloc[point]['stress']
 
             if young==1:
                 yg=True
@@ -286,7 +286,7 @@ def mapping2():
 
             if stress==1:
                 strs=True
-                print_strs=directory.iloc[point]['Print Distance']
+                print_strs=directory.iloc[point]['stress']
 
             if young==1:
                 yg=True
