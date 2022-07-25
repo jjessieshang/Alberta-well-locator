@@ -1,3 +1,5 @@
+from decimal import Overflow
+from enum import auto
 from app import app
 import folium
 import sqlite3
@@ -39,6 +41,7 @@ def mapping2():
 
     #property display selection value assignmnet
     distance = request.args.get('distance')
+    lithology = request.args.get('lithology')
     stress  = request.args.get('stress')
     young  = request.args.get('young')
 
@@ -46,6 +49,11 @@ def mapping2():
         distance = 0
     else:
         distance = int(distance)
+
+    if lithology is None:
+        lithology = 0
+    else:
+        lithology = int(lithology)
 
     if stress is None:
         stress = 0
@@ -242,9 +250,11 @@ def mapping2():
     if display <= 30:
         for point in range(0, display):
             print_dist=0
+            print_lith=0
             print_strs=0
             print_yg=0
             dist=False
+            lith=False
             strs=False
             yg=False
             nm=directory.iloc[point]['Directory']
@@ -252,6 +262,10 @@ def mapping2():
             if distance==1:
                 dist=True
                 print_dist=directory.iloc[point]['Print Distance']
+
+            if lithology==1:
+                lith=True
+                print_lith=directory.iloc[point]['stress']
 
             if stress==1:
                 strs=True
@@ -261,7 +275,7 @@ def mapping2():
                 yg=True
                 print_yg=directory.iloc[point]['Print Distance']
 
-            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
+            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, print_lith=print_lith, lith=lith, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
             iframe = branca.element.IFrame(html=html,width=510,height=280)
             popup_table = folium.Popup(folium.Html(html, script=True), max_width=500)
             folium.Marker(well_location_list[point],
@@ -274,15 +288,21 @@ def mapping2():
         for point in range(0, well_location_list_size):
             print_dist=0
             print_strs=0
+            print_lith=0
             print_yg=0
             dist=False
             strs=False
             yg=False
+            lith=False
             nm=directory.iloc[point]['Directory']
 
             if distance==1:
                 dist=True
                 print_dist=directory.iloc[point]['Print Distance']
+
+            if lithology==1:
+                lith=True
+                print_lith=directory.iloc[point]['stress']
 
             if stress==1:
                 strs=True
@@ -293,7 +313,7 @@ def mapping2():
                 print_yg=directory.iloc[point]['Print Distance']
             html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
             iframe = branca.element.IFrame(html=html,width=510,height=280)
-            popup_table = folium.Popup(folium.Html(html, script=True), max_width=500)
+            popup_table = folium.Popup(folium.Html(html, script=True), max_width=300)
             folium.Marker(well_location_list[point],
                         icon=folium.Icon(icon='glyphicon-star', icon_color='white', color='green'),
                         tooltip=directory.iloc[point]['Directory'],

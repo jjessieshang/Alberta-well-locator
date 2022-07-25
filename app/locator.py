@@ -1,3 +1,5 @@
+from decimal import Overflow
+from tkinter import scrolledtext
 from app import app
 import folium
 import sqlite3
@@ -340,7 +342,7 @@ def mapping():
                 print_yg=directory.iloc[point]['Print Distance']
             html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
             iframe = branca.element.IFrame(html=html,width=510,height=280)
-            popup_table = folium.Popup(folium.Html(html, script=True), max_width=500)
+            popup_table = folium.Popup(folium.Html(html, script=True), max_width=300)
             folium.Marker(well_location_list[point],
                         icon=folium.Icon(icon='glyphicon-star', icon_color='white', color='green'),
                         tooltip=directory.iloc[point]['Directory'],

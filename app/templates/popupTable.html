@@ -1,54 +1,194 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8"> 
     <h5 style="margin-bottom:10;
                text-align: center";
         width="200px">{{nm}}
     </h5>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Popup/Popups.css')}}">
 </head>
 <body>
-    <table>
-        {% if dist==True or strs==True or yg==True %}
-        <tr>
-            <th style="padding: 5px 15px;
-                    background-color: #c3cbcc;
-                    color: #fff;
-                    text-align: center;
-                    letter-spacing: 0.7px;">Property</th>
-            <th style="padding: 5px 15px;
-                    background-color: #c3cbcc;
-                    color: #fff;
-                    text-align: center;
-                    letter-spacing: 0.7px">Value</th>
-        </tr> 
-        {% endif %}
+    <hr>
+        {% if dist==True or lith==True or strs==True or yg==True %}
+        <table>
+            {% if dist==True %}
+            <tr>
+                <td style="padding: 5px 15px;
+                        background-color: #fff;
+                        padding-left: 55px;">Distance: </td>
+                <td style="padding: 5px 15px;
+                        background-color: #fff;
+                        padding-left: 38px;">{{print_dist}}</td>
+                </tr>
 
-        {% if dist==True %}
-        <tr>
-            <td style="padding: 5px 15px;
-                       background-color: #fff;">Distance: </td>
-            <td style="padding: 5px 15px;
-                       background-color: #fff">{{print_dist}}</td>
-        </tr>
-        {% endif %}
+            {% endif %}
+            <tr>
+                <td style="padding: 5px 15px;
+                        background-color: #fff; padding-bottom: 15px;
+                        padding-left: 55px;">Depth: </td>
+                <td style="padding: 5px 15px; padding-bottom: 15px;
+                        background-color: #fff;
+                        padding-left: 38px;">DROPDOWN</td>
+            </tr>
+        </table>
 
-        {% if strs==True %}
-        <tr>
-            <td style="padding: 5px 15px;
-                       background-color: #fff;">Stress: </td>
-            <td style="padding: 5px 15px;
-                       background-color: #fff">{{print_strs}}</td>
-        </tr>
-        {% endif %}
+        <hr>
+        <div class="scroll-bg">
+            <div class="scroll-div" style="width: 280px; height: 400px; overflow: hidden; overflow-y: scroll;">
+                <div class="scroll-object">
+                    <table>
 
-        {% if yg==True %}
-        <tr>
-            <td style="padding: 5px 15px;
-                       background-color: #fff;">Young's: </td>
-            <td style="padding: 5px 15px;
-                       background-color: #fff">{{print_yg}}</td>
-        </tr>
-        {% endif %}
-    </table>
+                    {% if lith==True %}
+                    <tr>
+                        <td colspan=3 style="padding: 5px; background-color: #c3cbcc;
+                        font-weight: bold; color: #fff;">Rock Lithology</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px; font-weight: bold; color: #939596; padding-bottom: 20px;">Description:</td>
+                        <td style="padding: 5px; max-width: 120px;">is sfdgsdfsdfgsdfs serdf ersfd fsfd</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px; font-weight: bold; color: #939596; padding-bottom: 20px;">Additional Notes:</td>
+                        <td style="padding: 5px; max-width: 120px;">is sfdgsdfsdfgsdfs serdf ersfd fsfd</td>
+                    </tr>
+
+                    {% endif %}
+
+                    {% if strs==True %}
+                    <tr>
+                        <td colspan=3 style="padding: 5px; background-color: #c3cbcc;
+                        font-weight: bold; color: #fff;">In-Situ</td>
+                    </tr>
+                    <tr>
+                        <td colspan=3 style="padding: 5px; font-weight: bold; color: #939596">Stress</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px;">Shmin:</td>
+                        <td style="padding: 5px 15px;">17kpa</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px;">Shmax:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px;">Vertical Stress:</td>
+                        <td style="padding: 5px 15px;">20kpa</td>
+                    </tr>
+                    <tr>
+                        <td colspan=3 style="padding: 5px; font-weight: bold; color: #939596">Other</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px;">Temperature:</td>
+                        <td style="padding: 5px 15px;">20 degrees</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-bottom: 20px;">Pore Pressure:</td>
+                        <td style="padding: 5px 15px; padding-bottom: 20px;">40</td>
+                    </tr>
+                    {% endif %}
+
+                    {% if yg==True %}
+                    <tr>
+                        <td colspan=3 style="padding: 5px; background-color: #c3cbcc;
+                        font-weight: bold; color: #fff;">Mechanical Properties</td>
+                    </tr>
+                    <tr>
+                        <td colspan=3 style="padding: 5px; font-weight: bold; color: #939596">Static</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px;">Elastic</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">Young's Modulus:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">Bulk's Modulus:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">Poisson's Ratio:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px;">Plastic</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">Cohesive Strength:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">Friction Angle:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td colspan=3 style="padding: 5px; font-weight: bold; color: #939596">Dynamic</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px;">Sonic Velocities</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">P-wave:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px; padding-bottom: 20px;">S-wave:</td>
+                        <td style="padding: 5px 15px; padding-bottom: 20px;"> - </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan=3 style="padding: 5px; background-color: #c3cbcc;
+                        font-weight: bold; color: #fff;">Mechanical Properties</td>
+                    </tr>
+                    <tr>
+                        <td colspan=3 style="padding: 5px; font-weight: bold; color: #939596">Static</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px;">Elastic</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">Young's Modulus:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">Bulk's Modulus:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">Poisson's Ratio:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px;">Plastic</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">Cohesive Strength:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">Friction Angle:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td colspan=3 style="padding: 5px; font-weight: bold; color: #939596">Dynamic</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px;">Sonic Velocities</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">P-wave:</td>
+                        <td style="padding: 5px 15px;"> - </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px; padding-bottom: 20px;">S-wave:</td>
+                        <td style="padding: 5px 15px; padding-bottom: 20px;"> - </td>
+                    </tr>
+                    {% endif %}
+                    </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
 </body>
 </html>

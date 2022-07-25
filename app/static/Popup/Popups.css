@@ -1,0 +1,105 @@
+/* .container {
+    width: 200px;
+    position: relative;
+}
+
+.click {
+    background-color: blue;
+}
+
+.click:hover {
+    background-color: bisque;
+}
+
+.click,.links {
+    padding: 12px;
+    font-size: 1.2em;
+    border: none;
+    outline: none;
+    width: 200px;
+    color: bisque;
+    transition: 0.3s;
+}
+
+.list {
+    position: absolute;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: 0.3s;
+}
+
+.newlist {
+    transform: scaleY(1);
+}
+
+.links {
+    background-color: bisque;
+}
+
+.links:hover {
+    background-color: blue;
+    transform: scale(1.1);
+} */
+
+*{
+    text-decoration: none;
+    list-style: none;
+    color: black;
+    margin: 0;
+}
+
+.menu {
+    width: 200px;
+    height: auto;
+    background-image: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px black;
+}
+
+.btn {
+    display: block;
+    padding: 1rem;
+    border-bottom: 1px solid #111b35;
+    border-top: 1px solid #111b35;
+    position: relative;
+}
+
+.submenu {
+    background: #111b35;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.8s ease-in-out;
+}
+
+.submenu a{
+    display: block;
+    padding: 1 rem;
+    position: relative;
+}
+
+.submenu a::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background: red;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.submenu a:hover {
+    padding-left: calc(1rem +5px);
+
+}
+
+.submenu a:hover::before {
+    opacity: 1;
+}
+
+.item:target .submenu{
+    max-height: 20rem;
+}
