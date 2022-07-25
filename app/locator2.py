@@ -19,6 +19,7 @@ def mapping2():
 
     ATS = pd.read_sql_query("SELECT * FROM ats", con=conn)
     directory = pd.read_sql_query("SELECT * FROM directory", con=conn)
+    wellProperties = pd.read_sql_query("SELECT * FROM wellProperties", con=conn)
     conn.close()
 
     #UWI input string processing
@@ -246,6 +247,11 @@ def mapping2():
     well_location_list = df_well_locations.values.tolist()
     well_location_list_size = len(well_location_list)
 
+    #Creating a new dataframe that is a subset of a well site, just different properties at different depths
+    wellInformation = wellProperties[wellProperties["Directory"]==UWI_ID]
+    wellInformation = wellInformation.reset_index()
+    wellInformation = wellInformation.drop('index',axis = 1)
+
     #MARKERS, if over a threshold, start clustering well markers
     if display <= 30:
         for point in range(0, display):
@@ -312,7 +318,6 @@ def mapping2():
                 yg=True
                 print_yg=directory.iloc[point]['Print Distance']
             html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
-            iframe = branca.element.IFrame(html=html,width=510,height=280)
             popup_table = folium.Popup(folium.Html(html, script=True), max_width=300)
             folium.Marker(well_location_list[point],
                         icon=folium.Icon(icon='glyphicon-star', icon_color='white', color='green'),
