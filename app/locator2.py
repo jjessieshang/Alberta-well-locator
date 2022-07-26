@@ -41,15 +41,10 @@ def mapping2():
     display = int(display)
 
     #property display selection value assignmnet
-    # distance = request.args.get('distance')
     lithology = request.args.get('lithology')
     in_situ  = request.args.get('insitu')
     mechanical  = request.args.get('mechanical')
 
-    # if distance is None:
-    #     distance = 0
-    # else:
-    #     distance = int(distance)
 
     if lithology is None:
         lithology = 0
@@ -295,8 +290,7 @@ def mapping2():
                 type = wellInformation['Type'].tolist()
                 description = wellInformation['Description'].tolist()
                 add_notes = wellInformation['AdditionalNotes'].tolist()
-                # depth = wellInformation['Depth'].tolist()
-                # index = len(depth)
+
             if in_situ==1:
                 situ=True
                 shmin = wellInformation['Minimumhorizontalstress-Shmin'].tolist()
@@ -329,7 +323,7 @@ def mapping2():
     else:
         marker_cluster = MarkerCluster(name="Clusters").add_to(m)
         for point in range(0, well_location_list_size):
-                        #Creating a new dataframe that is a subset of a well site, just different properties at different depths
+            #Creating a new dataframe that is a subset of a well site, just different properties at different depths
             wellInformation = wellProperties[wellProperties["Directory"]==directory.iloc[point]['Directory']]
             wellInformation = wellInformation.reset_index()
             wellInformation = wellInformation.drop('index',axis = 1)
@@ -337,15 +331,34 @@ def mapping2():
                             axis = 0,
                             ascending = True)         
 
-            dist=False
+            dist=True
+            print_dist=directory.iloc[point]['Print Distance']
+
             lith=False
             situ=False
             mech=False
+            depth = 0
+            index = 0
+            type = 0
+            description = 0
+            add_notes = 0
+            shmin =0
+            shmax =0
+            sv = 0
+            temp = 0
+            pp = 0 
+            youngs = 0
+            shear = 0
+            bulk = 0
+            poisson = 0
+            cohesive = 0
+            friction = 0
+            pWave = 0
+            sWave = 0
+
             nm=directory.iloc[point]['Directory']
 
-            if distance==1:
-                dist=True
-                print_dist=directory.iloc[point]['Print Distance']
+            if (mechanical==1 or lithology==1 or in_situ==1):
                 depth = wellInformation['Depth'].tolist()
                 index = len(depth)
 

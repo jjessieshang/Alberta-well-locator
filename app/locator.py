@@ -71,6 +71,7 @@ def mapping():
 
     ATS = pd.read_sql_query("SELECT * FROM ats", con=conn)
     directory = pd.read_sql_query("SELECT * FROM directory", con=conn)
+    wellProperties = pd.read_sql_query("SELECT * FROM wellProperties", con=conn)
     conn.close()
 
     #form input
@@ -86,24 +87,24 @@ def mapping():
     display = int(display)
 
     #property display selection value assignmnet
-    distance = request.args.get('distance')
-    stress  = request.args.get('stress')
-    young  = request.args.get('young')
+    lithology = request.args.get('lithology')
+    in_situ  = request.args.get('insitu')
+    mechanical  = request.args.get('mechanical')
 
-    if distance is None:
-        distance = 0
+    if lithology is None:
+        lithology = 0
     else:
-        distance = int(distance)
+        lithology = int(lithology)
 
-    if stress is None:
-        stress = 0
+    if in_situ is None:
+        in_situ = 0
     else:
-        stress = int(stress)
+        in_situ = int(in_situ)
 
-    if young is None:
-        young = 0
+    if mechanical is None:
+        mechanical = 0
     else:
-        young= int(young)
+        mechanical= int(mechanical)
 
     #sectional matrix
     arr = np.arange(1,37)
@@ -289,27 +290,74 @@ def mapping():
 
     if display <= 30:
         for point in range(0, display):
-            print_dist=0
-            print_strs=0
-            print_yg=0
-            dist=False
-            strs=False
-            yg=False
+            #Creating a new dataframe that is a subset of a well site, just different properties at different depths
+            wellInformation = wellProperties[wellProperties["Directory"]==directory.iloc[point]['Directory']]
+            wellInformation = wellInformation.reset_index()
+            wellInformation = wellInformation.drop('index',axis = 1)
+            wellInformation = wellInformation.sort_values(by = ['Depth'],
+                            axis = 0,
+                            ascending = True)         
+
+            dist=True
+            print_dist=directory.iloc[point]['Print Distance']
+
+            lith=False
+            situ=False
+            mech=False
+            depth = 0
+            index = 0
+            type = 0
+            description = 0
+            add_notes = 0
+            shmin =0
+            shmax =0
+            sv = 0
+            temp = 0
+            pp = 0 
+            youngs = 0
+            shear = 0
+            bulk = 0
+            poisson = 0
+            cohesive = 0
+            friction = 0
+            pWave = 0
+            sWave = 0
+
             nm=directory.iloc[point]['Directory']
 
-            if distance==1:
-                dist=True
-                print_dist=directory.iloc[point]['Print Distance']
+            if (mechanical==1 or lithology==1 or in_situ==1):
+                depth = wellInformation['Depth'].tolist()
+                index = len(depth)
 
-            if stress==1:
-                strs=True
-                print_strs=directory.iloc[point]['stress']
+            if lithology==1:
+                lith=True
+                type = wellInformation['Type'].tolist()
+                description = wellInformation['Description'].tolist()
+                add_notes = wellInformation['AdditionalNotes'].tolist()
 
-            if young==1:
-                yg=True
-                print_yg=directory.iloc[point]['Print Distance']
+            if in_situ==1:
+                situ=True
+                shmin = wellInformation['Minimumhorizontalstress-Shmin'].tolist()
+                shmax = wellInformation['Maximumhorizontalstress(Shmax)'].tolist()
+                sv = wellInformation['Verticalstress(Sv)'].tolist()
+                temp = wellInformation['Temperature'].tolist()
+                pp = wellInformation['PorePressure'].tolist()
 
-            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
+            if mechanical==1:
+                mech=True
+                youngs = wellInformation['Youngsmodulus'].tolist()
+                shear = wellInformation['ShearModulus'].tolist()
+                bulk = wellInformation['BulkModulus'].tolist()
+                poisson = wellInformation['Poissonsratio'].tolist()
+                cohesive = wellInformation['Cohesivestrength'].tolist()
+                friction = wellInformation['Frictionangle'].tolist()
+                pWave = wellInformation['P-wave'].tolist()
+                sWave = wellInformation['S-wave'].tolist()
+
+            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, index=index,
+                lith=lith, depth=depth, type=type, description=description, add_notes=add_notes,
+                situ=situ, shmin=shmin, shmax=shmax, sv=sv, temp=temp, pp=pp,
+                mech=mech, youngs=youngs, shear=shear, bulk=bulk, poisson=poisson, cohesive=cohesive, friction=friction, pWave=pWave, sWave=sWave)
             iframe = branca.element.IFrame(html=html,width=510,height=280)
             popup_table = folium.Popup(folium.Html(html, script=True), max_width=500)
             folium.Marker(well_location_list[point],
@@ -321,26 +369,74 @@ def mapping():
     else:
         marker_cluster = MarkerCluster(name="Clusters").add_to(m)
         for point in range(0, well_location_list_size):
-            print_dist=0
-            print_strs=0
-            print_yg=0
-            dist=False
-            strs=False
-            yg=False
+            #Creating a new dataframe that is a subset of a well site, just different properties at different depths
+            wellInformation = wellProperties[wellProperties["Directory"]==directory.iloc[point]['Directory']]
+            wellInformation = wellInformation.reset_index()
+            wellInformation = wellInformation.drop('index',axis = 1)
+            wellInformation = wellInformation.sort_values(by = ['Depth'],
+                            axis = 0,
+                            ascending = True)         
+
+            dist=True
+            print_dist=directory.iloc[point]['Print Distance']
+
+            lith=False
+            situ=False
+            mech=False
+            depth = 0
+            index = 0
+            type = 0
+            description = 0
+            add_notes = 0
+            shmin =0
+            shmax =0
+            sv = 0
+            temp = 0
+            pp = 0 
+            youngs = 0
+            shear = 0
+            bulk = 0
+            poisson = 0
+            cohesive = 0
+            friction = 0
+            pWave = 0
+            sWave = 0
+
             nm=directory.iloc[point]['Directory']
 
-            if distance==1:
-                dist=True
-                print_dist=directory.iloc[point]['Print Distance']
+            if (mechanical==1 or lithology==1 or in_situ==1):
+                depth = wellInformation['Depth'].tolist()
+                index = len(depth)
 
-            if stress==1:
-                strs=True
-                print_strs=directory.iloc[point]['stress']
+            if lithology==1:
+                lith=True
+                type = wellInformation['Type'].tolist()
+                description = wellInformation['Description'].tolist()
+                add_notes = wellInformation['AdditionalNotes'].tolist()
 
-            if young==1:
-                yg=True
-                print_yg=directory.iloc[point]['Print Distance']
-            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
+            if in_situ==1:
+                situ=True
+                shmin = wellInformation['Minimumhorizontalstress-Shmin'].tolist()
+                shmax = wellInformation['Maximumhorizontalstress(Shmax)'].tolist()
+                sv = wellInformation['Verticalstress(Sv)'].tolist()
+                temp = wellInformation['Temperature'].tolist()
+                pp = wellInformation['PorePressure'].tolist()
+
+            if mechanical==1:
+                mech=True
+                youngs = wellInformation['Youngsmodulus'].tolist()
+                shear = wellInformation['ShearModulus'].tolist()
+                bulk = wellInformation['BulkModulus'].tolist()
+                poisson = wellInformation['Poissonsratio'].tolist()
+                cohesive = wellInformation['Cohesivestrength'].tolist()
+                friction = wellInformation['Frictionangle'].tolist()
+                pWave = wellInformation['P-wave'].tolist()
+                sWave = wellInformation['S-wave'].tolist()
+
+            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, index=index,
+                lith=lith, depth=depth, type=type, description=description, add_notes=add_notes,
+                situ=situ, shmin=shmin, shmax=shmax, sv=sv, temp=temp, pp=pp,
+                mech=mech, youngs=youngs, shear=shear, bulk=bulk, poisson=poisson, cohesive=cohesive, friction=friction, pWave=pWave, sWave=sWave)
             iframe = branca.element.IFrame(html=html,width=510,height=280)
             popup_table = folium.Popup(folium.Html(html, script=True), max_width=300)
             folium.Marker(well_location_list[point],
