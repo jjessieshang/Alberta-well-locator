@@ -246,19 +246,19 @@ def mapping2():
     # df_well_locations
     well_location_list = df_well_locations.values.tolist()
     well_location_list_size = len(well_location_list)
-
-    #Creating a new dataframe that is a subset of a well site, just different properties at different depths
-    wellInformation = wellProperties[wellProperties["Directory"]==UWI_ID]
-    wellInformation = wellInformation.reset_index()
-    wellInformation = wellInformation.drop('index',axis = 1)
+    
 
     #MARKERS, if over a threshold, start clustering well markers
     if display <= 30:
         for point in range(0, display):
-            print_dist=0
-            print_lith=0
-            print_strs=0
-            print_yg=0
+            #Creating a new dataframe that is a subset of a well site, just different properties at different depths
+            wellInformation = wellProperties[wellProperties["Directory"]==directory.iloc[point]['Directory']]
+            wellInformation = wellInformation.reset_index()
+            wellInformation = wellInformation.drop('index',axis = 1)
+            wellInformation = wellInformation.sort_values(by = ['Depth'],
+                            axis = 0,
+                            ascending = True)               
+
             dist=False
             lith=False
             strs=False
@@ -268,21 +268,38 @@ def mapping2():
             if distance==1:
                 dist=True
                 print_dist=directory.iloc[point]['Print Distance']
+                depth = wellInformation['Depth'].tolist()
+                index = len(depth)
 
             if lithology==1:
                 lith=True
-                print_lith=directory.iloc[point]['stress']
+                type = wellInformation['Type'].tolist()
+                description = wellInformation['Description'].tolist()
+                add_notes = wellInformation['AdditionalNotes'].tolist()
 
             if stress==1:
                 strs=True
-                print_strs=directory.iloc[point]['stress']
+                shmin = wellInformation['Minimumhorizontalstress-Shmin'].tolist()
+                shmax = wellInformation['Maximumhorizontalstress(Shmax)'].tolist()
+                sv = wellInformation['Verticalstress(Sv)'].tolist()
+                temp = wellInformation['Temperature'].tolist()
+                pp = wellInformation['PorePressure'].tolist()
 
             if young==1:
                 yg=True
-                print_yg=directory.iloc[point]['Print Distance']
+                youngs = wellInformation['Youngsmodulus'].tolist()
+                shear = wellInformation['ShearModulus'].tolist()
+                bulk = wellInformation['BulkModulus'].tolist()
+                poisson = wellInformation['Poissonsratio'].tolist()
+                cohesive = wellInformation['Cohesivestrength'].tolist()
+                friction = wellInformation['Frictionangle'].tolist()
+                pWave = wellInformation['P-wave'].tolist()
+                sWave = wellInformation['S-wave'].tolist()
 
-            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, print_lith=print_lith, lith=lith, strs=strs, print_strs=print_strs, yg=yg, print_yg=print_yg)
-            iframe = branca.element.IFrame(html=html,width=510,height=280)
+            html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, index=index,
+                lith=lith, depth=depth, type=type, description=description, add_notes=add_notes,
+                strs=strs, shmin=shmin, shmax=shmax, sv=sv, temp=temp, pp=pp,
+                yg=yg, youngs=youngs, shear=shear, bulk=bulk, poisson=poisson, cohesive=cohesive, friction=friction, pWave=pWave, sWave=sWave)
             popup_table = folium.Popup(folium.Html(html, script=True), max_width=500)
             folium.Marker(well_location_list[point],
                         icon=folium.Icon(icon='glyphicon-star', icon_color='white', color='green'),
@@ -308,7 +325,7 @@ def mapping2():
 
             if lithology==1:
                 lith=True
-                print_lith=directory.iloc[point]['stress']
+                print_lith=wellInformation['Type']
 
             if stress==1:
                 strs=True

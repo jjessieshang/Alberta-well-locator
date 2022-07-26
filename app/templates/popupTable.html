@@ -19,7 +19,8 @@
                         padding-left: 55px;">Distance: </td>
                 <td style="padding: 5px 15px;
                         background-color: #fff;
-                        padding-left: 38px;">{{print_dist}}</td>
+                        padding-left: 38px;">{{print_dist}}
+                </td>
                 </tr>
 
             {% endif %}
@@ -38,7 +39,11 @@
             <div class="scroll-div" style="width: 280px; height: 400px; overflow: hidden; overflow-y: scroll;">
                 <div class="scroll-object">
                     <table>
-
+                    {% for x in range(index) %}
+                        <tr>
+                            <td colspan=3 style="padding: 5px; background-color: #c3cbcc;
+                            font-weight: bold; color: #fff;">DEPTH: {{depth[x]}}</td>
+                        </tr>
                     {% if lith==True %}
                     <tr>
                         <td colspan=3 style="padding: 5px; background-color: #c3cbcc;
@@ -46,11 +51,11 @@
                     </tr>
                     <tr>
                         <td style="padding: 5px; font-weight: bold; color: #939596; padding-bottom: 20px;">Description:</td>
-                        <td style="padding: 5px; max-width: 120px;">is sfdgsdfsdfgsdfs serdf ersfd fsfd</td>
+                        <td style="padding: 5px; max-width: 120px;">{{description[x]}}</td>
                     </tr>
                     <tr>
                         <td style="padding: 5px; font-weight: bold; color: #939596; padding-bottom: 20px;">Additional Notes:</td>
-                        <td style="padding: 5px; max-width: 120px;">is sfdgsdfsdfgsdfs serdf ersfd fsfd</td>
+                        <td style="padding: 5px; max-width: 120px;">{{add_notes[x]}}</td>
                     </tr>
 
                     {% endif %}
@@ -65,15 +70,15 @@
                     </tr>
                     <tr>
                         <td style="padding: 5px 15px;">Shmin:</td>
-                        <td style="padding: 5px 15px;">17kpa</td>
+                        <td style="padding: 5px 15px;">{{shmin[x]}}</td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 15px;">Shmax:</td>
-                        <td style="padding: 5px 15px;"> - </td>
+                        <td style="padding: 5px 15px;">{{shmax[x]}}</td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 15px;">Vertical Stress:</td>
-                        <td style="padding: 5px 15px;">20kpa</td>
+                        <td style="padding: 5px 15px;">{{sv[x]}}</td>
                     </tr>
                     <tr>
                         <td colspan=3 style="padding: 5px; font-weight: bold; color: #939596">Other</td>
@@ -101,26 +106,30 @@
                     </tr>
                     <tr>
                         <td style="padding: 5px 15px; padding-left: 30px;">Young's Modulus:</td>
-                        <td style="padding: 5px 15px;"> - </td>
+                        <td style="padding: 5px 15px;">{{youngs[x]}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 15px; padding-left: 30px;">Shear Modulus:</td>
+                        <td style="padding: 5px 15px;">{{shear[x]}}</td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 15px; padding-left: 30px;">Bulk's Modulus:</td>
-                        <td style="padding: 5px 15px;"> - </td>
+                        <td style="padding: 5px 15px;">{{bulk[x]}}</td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 15px; padding-left: 30px;">Poisson's Ratio:</td>
-                        <td style="padding: 5px 15px;"> - </td>
+                        <td style="padding: 5px 15px;">{{poisson[x]}}</td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 15px;">Plastic</td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 15px; padding-left: 30px;">Cohesive Strength:</td>
-                        <td style="padding: 5px 15px;"> - </td>
+                        <td style="padding: 5px 15px;">{{cohesive[x]}}</td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 15px; padding-left: 30px;">Friction Angle:</td>
-                        <td style="padding: 5px 15px;"> - </td>
+                        <td style="padding: 5px 15px;">{{friction[x]}}</td>
                     </tr>
                     <tr>
                         <td colspan=3 style="padding: 5px; font-weight: bold; color: #939596">Dynamic</td>
@@ -130,61 +139,14 @@
                     </tr>
                     <tr>
                         <td style="padding: 5px 15px; padding-left: 30px;">P-wave:</td>
-                        <td style="padding: 5px 15px;"> - </td>
+                        <td style="padding: 5px 15px;">{{pWave[x]}}</td>
                     </tr>
                     <tr>
                         <td style="padding: 5px 15px; padding-left: 30px; padding-bottom: 20px;">S-wave:</td>
-                        <td style="padding: 5px 15px; padding-bottom: 20px;"> - </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan=3 style="padding: 5px; background-color: #c3cbcc;
-                        font-weight: bold; color: #fff;">Mechanical Properties</td>
-                    </tr>
-                    <tr>
-                        <td colspan=3 style="padding: 5px; font-weight: bold; color: #939596">Static</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 5px 15px;">Elastic</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 5px 15px; padding-left: 30px;">Young's Modulus:</td>
-                        <td style="padding: 5px 15px;"> - </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 5px 15px; padding-left: 30px;">Bulk's Modulus:</td>
-                        <td style="padding: 5px 15px;"> - </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 5px 15px; padding-left: 30px;">Poisson's Ratio:</td>
-                        <td style="padding: 5px 15px;"> - </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 5px 15px;">Plastic</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 5px 15px; padding-left: 30px;">Cohesive Strength:</td>
-                        <td style="padding: 5px 15px;"> - </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 5px 15px; padding-left: 30px;">Friction Angle:</td>
-                        <td style="padding: 5px 15px;"> - </td>
-                    </tr>
-                    <tr>
-                        <td colspan=3 style="padding: 5px; font-weight: bold; color: #939596">Dynamic</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 5px 15px;">Sonic Velocities</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 5px 15px; padding-left: 30px;">P-wave:</td>
-                        <td style="padding: 5px 15px;"> - </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 5px 15px; padding-left: 30px; padding-bottom: 20px;">S-wave:</td>
-                        <td style="padding: 5px 15px; padding-bottom: 20px;"> - </td>
+                        <td style="padding: 5px 15px; padding-bottom: 20px;">{{sWave[x]}}</td>
                     </tr>
                     {% endif %}
+                    {% endfor %}
                     </table>
                     </div>
                 </div>
