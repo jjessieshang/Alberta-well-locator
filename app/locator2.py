@@ -41,15 +41,15 @@ def mapping2():
     display = int(display)
 
     #property display selection value assignmnet
-    distance = request.args.get('distance')
+    # distance = request.args.get('distance')
     lithology = request.args.get('lithology')
     in_situ  = request.args.get('insitu')
     mechanical  = request.args.get('mechanical')
 
-    if distance is None:
-        distance = 0
-    else:
-        distance = int(distance)
+    # if distance is None:
+    #     distance = 0
+    # else:
+    #     distance = int(distance)
 
     if lithology is None:
         lithology = 0
@@ -259,7 +259,9 @@ def mapping2():
                             axis = 0,
                             ascending = True)         
 
-            dist=False
+            dist=True
+            print_dist=directory.iloc[point]['Print Distance']
+
             lith=False
             situ=False
             mech=False
@@ -287,11 +289,6 @@ def mapping2():
             if (mechanical==1 or lithology==1 or in_situ==1):
                 depth = wellInformation['Depth'].tolist()
                 index = len(depth)
-
-            if distance==1:
-                dist=True
-                print_dist=directory.iloc[point]['Print Distance']
-
 
             if lithology==1:
                 lith=True
