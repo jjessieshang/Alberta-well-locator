@@ -41,7 +41,7 @@
                     <table>
                     {% for x in range(index) %}
                         <tr>
-                            <td colspan=3 style="padding: 5px; background-color: #c3cbcc;
+                            <td colspan=3 style="padding: 5px; background-color: #86a77a;
                             font-weight: bold; color: #fff;">DEPTH: {{depth[x]}}</td>
                         </tr>
                     {% if lith==True %}
@@ -50,17 +50,21 @@
                         font-weight: bold; color: #fff;">Rock Lithology</td>
                     </tr>
                     <tr>
-                        <td style="padding: 5px; font-weight: bold; color: #939596; padding-bottom: 20px;">Description:</td>
+                        <td style="padding: 5px; font-weight: bold; color: #939596;">Type:</td>
+                        <td style="padding: 5px; max-width: 120px;">{{type[x]}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px; font-weight: bold; color: #939596;">Description:</td>
                         <td style="padding: 5px; max-width: 120px;">{{description[x]}}</td>
                     </tr>
                     <tr>
                         <td style="padding: 5px; font-weight: bold; color: #939596; padding-bottom: 20px;">Additional Notes:</td>
-                        <td style="padding: 5px; max-width: 120px;">{{add_notes[x]}}</td>
+                        <td style="padding: 5px; max-width: 120px; padding-bottom: 20px">{{add_notes[x]}}</td>
                     </tr>
 
                     {% endif %}
 
-                    {% if strs==True %}
+                    {% if situ==True %}
                     <tr>
                         <td colspan=3 style="padding: 5px; background-color: #c3cbcc;
                         font-weight: bold; color: #fff;">In-Situ</td>
@@ -93,7 +97,7 @@
                     </tr>
                     {% endif %}
 
-                    {% if yg==True %}
+                    {% if mech==True %}
                     <tr>
                         <td colspan=3 style="padding: 5px; background-color: #c3cbcc;
                         font-weight: bold; color: #fff;">Mechanical Properties</td>
