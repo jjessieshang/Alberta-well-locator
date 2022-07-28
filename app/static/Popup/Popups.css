@@ -61,7 +61,7 @@
     max-height: 20rem;
 }
 
-span {
+.dropdown span {
   padding : 5px 10px;
   background : #fff; 
   color : black;
@@ -73,7 +73,7 @@ span {
   align-items: center;
 }
 
-span::after {
+.dropdown span::after {
   content: "▼";
   display: flex;
   justify-content: center;
