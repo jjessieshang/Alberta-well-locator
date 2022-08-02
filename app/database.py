@@ -67,16 +67,29 @@ class Properties(db.Model):
     Pwave = db.Column(db.String)
     Swave = db.Column(db.String)
 
+class ReadForm(FlaskForm):
+    name = StringField('Which actor is your favorite?', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
 
 @app.route('/database/')
 def read():
+    # try:
+    #     uwi = Directory.query.all()
+    #     uwi_text = '<ul>'
+    #     for well in uwi:
+    #         uwi_text += '<li>' + well.adjusted_UWI + ', ' + well.Directory + '</li>'
+    #     uwi_text += '</ul>'
+    #     return uwi_text
+    # except Exception as e:
+    #     # e holds description of the error
+    #     error_text = "<p>The error:<br>" + str(e) + "</p>"
+    #     hed = '<h1>Something is broken.</h1>'
+    #     return hed + error_text
+        # get a list of unique values in the style column
     try:
         uwi = Directory.query.all()
-        uwi_text = '<ul>'
-        for well in uwi:
-            uwi_text += '<li>' + well.adjusted_UWI + ', ' + well.Directory + '</li>'
-        uwi_text += '</ul>'
-        return uwi_text
+        return render_template('database.html', uwi=uwi)
     except Exception as e:
         # e holds description of the error
         error_text = "<p>The error:<br>" + str(e) + "</p>"
