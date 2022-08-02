@@ -13,7 +13,7 @@ from flask import render_template, request
 
 @app.route('/form2/mapping/')
 def mapping2():
-
+ 
     #database to local dataframe
     conn = sqlite3.connect('ats.sqlite')
 

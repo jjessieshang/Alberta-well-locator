@@ -1,0 +1,19 @@
+<table class="table">
+    <tr>
+        <th>Sock Name</th>
+        <th>Color</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Updated</th>
+    </tr>
+
+    <!-- here is a for-loop to give us all the socks -->
+    {% for well in uwi %}
+    <tr>
+        <td>{{ sock.name }}</td>
+        <td>{{ sock.color }}</td>
+        <td>${{ sock.price }}</td>
+        <td>{{ sock.quantity }}</td>
+        <td>{{ sock.updated }}</td>
+    </tr>
+    {% en
