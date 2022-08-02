@@ -8,11 +8,16 @@ import pandas as pd
 import numpy as np
 from math import radians, cos, sin, asin, sqrt
 from folium.plugins import Fullscreen, MarkerCluster
-from flask import render_template, request
+from flask import Flask, render_template, request, flash
 
 
 @app.route('/form2/mapping/')
 def mapping2():
+    # Flask-WTF requires an enryption key - the string can be anything
+    app.config['SECRET_KEY'] = 'BitCanGeosciences'
+
+    # Flask-Bootstrap requires this line
+    Bootstrap(app)
 
     #database to local dataframe
     conn = sqlite3.connect('ats.sqlite')
