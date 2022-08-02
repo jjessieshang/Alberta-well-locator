@@ -44,7 +44,7 @@ class Directory(db.Model):
     adjusted_UWI = db.Column(db.String)
     Latitude = db.Column(db.Float)
     Longitude = db.Column(db.Float)
-    stress = db.Column(db.Float)
+    stress = db.Column(db.String)
 
 class Properties(db.Model):
     __tablename__ = 'wellProperties'
@@ -53,19 +53,19 @@ class Properties(db.Model):
     Type = db.Column(db.String)
     Description = db.Column(db.String)
     AdditionalNotes = db.Column(db.String)
-    Minimumhorizontalstress = db.Column(db.String)
-    Maximumhorizontalstress = db.Column(db.String)
+    Shmin = db.Column(db.String)
+    Shmax = db.Column(db.String)
     Verticalstress = db.Column(db.String)
     Temperature = db.Column(db.String)
     PorePressure = db.Column(db.String)
-    Youngsmodulus = db.Column(db.String)
+    YoungsModulus = db.Column(db.String)
     ShearModulus = db.Column(db.String)
     BulkModulus = db.Column(db.String)
-    Poissonsratio = db.Column(db.String)
-    Cohesivestrength = db.Column(db.String)
-    Frictionangle = db.Column(db.String)
-    Pwave = db.Column(db.String)
-    Swave = db.Column(db.String)
+    PoissonsRatio = db.Column(db.String)
+    CohesiveStrength = db.Column(db.String)
+    FrictionAngle = db.Column(db.String)
+    pWave = db.Column(db.String)
+    sWave = db.Column(db.String)
 
 class ReadForm(FlaskForm):
     name = StringField('Which actor is your favorite?', validators=[DataRequired()])

@@ -19,6 +19,3 @@ def form():
 def form2():
     return render_template("uwiForm2.html")
 
-# @app.route('/database/')
-# def read():
-#     return render_template('list.html', socks=socks, style=style)
