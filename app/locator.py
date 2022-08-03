@@ -10,58 +10,6 @@ from math import radians, cos, sin, asin, sqrt
 from folium.plugins import Fullscreen, MarkerCluster
 from flask import request, render_template
 
-# conn = sqlite3.connect('ats.sqlite')
-
-# #(executed once to import csv into sqlite)
-# #importing dataframe1
-# ATS = pd.read_csv('~/Desktop/OneDrive - BitCan/Mapping Program/ATS.csv', sep =',')
-# ATS = ATS.drop('Unnamed: 3',axis = 1)
-
-# #importing dataframe2
-# directory = pd.read_csv('~/Desktop/OneDrive - BitCan/Mapping Program/ATS_directory.csv', sep =',')
-# directory = directory.drop('Unnamed: 10',axis = 1)
-# directory = directory.drop('Unnamed: 11',axis = 1)
-# directory = directory.drop('Unnamed: 12',axis = 1)
-# directory = directory.drop('Unnamed: 13',axis = 1)
-# directory = directory.drop('Unnamed: 14',axis = 1)
-# directory = directory.drop('Unnamed: 15',axis = 1)
-# directory = directory.drop('Unnamed: 16',axis = 1)
-# directory = directory.drop('Unnamed: 17',axis = 1)
-# directory = directory.drop(index = 28)
-# directory = directory.drop(index = 29)
-
-# #insert df into sql 
-# ATS.to_sql(
-#     name= 'ATS',
-#     con= conn,
-#     if_exists= 'replace',
-#     index= False,
-#     dtype={'UWI': 'text',
-#            'Latitude': 'real',
-#            'Longitude': 'real'}
-# )
-
-# directory.to_sql(
-#     name= 'directory',
-#     con= conn,
-#     if_exists= 'replace',
-#     index= False,
-#     dtype={'Directory': 'text',
-#            'LSD': 'real',
-#            'SC': 'real',
-#            'TWP': 'real',
-#            'RG': 'real',
-#            'W': 'text',
-#            'M': 'real',
-#            'adjusted_UWI': 'text',
-#            'Latitude': 'real',
-#            'Longitude': 'real',
-#            'Distance (km)': 'real'}
-# )
-
-# conn.commit()
-# conn.close()
-
 
 @app.route('/form/mapping/')
 def mapping():

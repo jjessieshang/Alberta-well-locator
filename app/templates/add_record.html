@@ -29,20 +29,22 @@ Add a Record
 			<p class="lead"><strong>{{ message }}</strong></p>
 
 			<!-- links -->
-			<p><a href="{{ url_for('add_record') }}">Submit another sock.</a></p>
+			<p><a href="{{ url_for('add_record') }}">Submit another record.</a></p>
 
 		{% else %}
 
 			<!-- the form is displayed when template opens via GET not POST -->
 
-			<p class="lead alert alert-primary">Add a new sock to our inventory.</p>
+			<p class="lead alert alert-primary">Add a new well site to our inventory.</p>
+
+            <p class="ml-4"><a href="{{ url_for('database') }}">Return to index.</a></p>
 
 			<!-- show flash - based on WTForms validators
 				 see https://pythonprogramming.net/flash-flask-tutorial/
 				 get_flashed_messages() exists here because of flash()
 				 in the route function
 				 -->
-			<!-- {% with errors = get_flashed_messages() %}
+			{% with errors = get_flashed_messages() %}
 				{% if errors %}
 					{% for err in errors %}
 						<div class="alert alert-danger alert-dismissible" role="alert">
@@ -51,7 +53,7 @@ Add a Record
 						</div>
 					{% endfor %}
 				{% endif %}
-			{% endwith %} -->
+			{% endwith %}
 			<!-- end of flash -->
 
 			<!-- the form, thanks to WTForms -->

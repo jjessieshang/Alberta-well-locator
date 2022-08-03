@@ -7,43 +7,30 @@
 	</style>
 {% endblock %}
 
-
 {% block title %}
-Sock Style List
+BitCan Well Database
 {% endblock %}
 
 
 {% block content %}
 
 <div class="container">
-  <div class="row pb-5">
+  <div class="row">
     <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
 
-      <h1 class="pt-5 pb-2">Add a New Well Location</h1>
+      <h1 class="pt-5 pb-2">Bitcan Well Database</h1>
+
+      <p class="lead">This is the index page for accessing the SQLite database containing an inventory of Bitcan's directory of wells and their properties.</p>
 
 
-		<table class="table">
-			<tr>
-				<th>Directory</th>
-				<th>Shear</th>
-                <th>Angle</th>
-				<th>Rock</th>
+	  <!-- links -->
+	  <p>You can <a href="{{ url_for('directory') }}">view the existing directory</a>.</p>
+	  <p>You can <a href="{{ url_for('add_record') }}">add a new well location</a>.</p>
+	  <p>You can <a href="{{ url_for( 'select_record', letters='AF' ) }}">select an existing entry to edit or delete its' properties</a>.</p>
+	  <p>You can <a href="{{ url_for('home') }}">return to the web app</a>.</p>
 
-			</tr>
-
-			<!-- here is a for-loop to give us all the socks -->
-			{% for well in uwi %}
-			<tr>
-				<td>{{ well.Directory }}</td>
-				<td>{{ well.ShearModulus }}</td>
-                <td>{{ well.FrictionAngle }}</td>
-				<td>{{ well.Type }}</td>
-			</tr>
-			{% endfor %}
-		</table>
-
-		</div>
-	</div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
