@@ -20,7 +20,7 @@ def mapping():
     ATS = pd.read_sql_query("SELECT * FROM ats", con=conn)
     directory = pd.read_sql_query("SELECT * FROM directory", con=conn)
     wellProperties = pd.read_sql_query("SELECT * FROM wellProperties", con=conn)
-    conn.close()
+    conn.close() 
 
     #form input
     lsd = request.args.get('lsd')

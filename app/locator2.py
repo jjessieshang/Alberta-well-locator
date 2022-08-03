@@ -3,6 +3,7 @@ from enum import auto
 from inspect import signature
 from app import app
 import folium
+import re
 import sqlite3
 import pandas as pd
 import numpy as np
@@ -31,7 +32,7 @@ def mapping2():
     sc = input_UWI[1]
     twp = input_UWI[2]
 
-    last = input_UWI[3].split('W')
+    last = re.split("w", input_UWI[3], flags=re.IGNORECASE)
     rg = last[0]
     M = last[1]
 
