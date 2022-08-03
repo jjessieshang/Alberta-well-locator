@@ -391,7 +391,8 @@ html {
     flex-direction: column;
     align-items: flex-start;
     margin: 16px;
-    text-align: left;
+    text-align: center;
+    align-items: center;
     width: 160px;
     box-sizing: border-box;
 }
