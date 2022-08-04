@@ -29,9 +29,11 @@ Add a Record
 			<p class="lead"><strong>{{ message }}</strong></p>
 
 			<!-- links -->
+			<p><a href="{{ url_for('directory') }}">View the updated directory.</a></p>
+			<p><a href="{{ url_for('directory') }}">Enter additional data for this well site.</a></p>
 			<p><a href="{{ url_for('add_record') }}">Submit another record.</a></p>
 
-		{% else %}
+		{% else %} 
 
 			<!-- the form is displayed when template opens via GET not POST -->
 
