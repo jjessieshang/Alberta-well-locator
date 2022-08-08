@@ -61,15 +61,3 @@ class Directory(db.Model):
 def directory():
     uwi = Directory.query.order_by(Directory.Directory).all()
     return render_template('directory.html', uwi=uwi)
-
-    # @app.route('/database/')
-#     def read():
-#         #Printing the data table
-#         try:
-#             uwi = Properties.query.all()
-#             return render_template('database.html', uwi=uwi)
-#         except Exception as e:
-#             # e holds description of the error
-#             error_text = "<p>The error:<br>" + str(e) + "</p>"
-#             hed = '<h1>Something is broken.</h1>'
-#     return hed + error_text

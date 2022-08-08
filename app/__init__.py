@@ -10,5 +10,6 @@ from app import add_record
 from app import edit_or_delete
 from app import edit_record
 from app import delete_record
-from app import select_record
+from app import select_record1
+from app import select_record2
 from app import database
