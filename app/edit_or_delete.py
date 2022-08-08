@@ -148,6 +148,6 @@ def edit_or_delete():
     choice = request.form['choice']
     well = Properties.query.filter(Properties.id == id).first()
     # two forms in this template
-    form1 = AddRecord()
+    form1 = EditForm()
     form2 = DeleteForm()
     return render_template('edit_or_delete.html', well=well, form1=form1, form2=form2, choice=choice)
