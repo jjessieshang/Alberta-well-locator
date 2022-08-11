@@ -114,8 +114,9 @@ def select_record2():
     # .between() evaluates first letter of a string
     id = request.form['id']
     wells = Properties.query.filter(Properties.Directory == id).all()
-    nameFilter = Properties.query.filter(Properties.Directory == id).first()
-    name = nameFilter.Directory
+
+    if wells is None: 
+        wells = 0
 
     # depths = []
     # for well in wells:
@@ -126,4 +127,4 @@ def select_record2():
     # depths.sort()
 
     #sort the entries in ascending depth
-    return render_template('select_record2.html', wells=wells, name=name) 
+    return render_template('select_record2.html', wells=wells, id=id) 
