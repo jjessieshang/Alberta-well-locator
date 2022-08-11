@@ -106,7 +106,7 @@ class Properties(db.Model):
         self.FrictionAngle =FrictionAngle
         self.pWave = pWave
         self.sWave = sWave
-
+ 
     
 @app.route('/select_record1/<letters>')
 def select_record1(letters):

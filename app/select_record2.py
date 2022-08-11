@@ -114,4 +114,6 @@ def select_record2():
     # .between() evaluates first letter of a string
     id = request.form['id']
     wells = Properties.query.filter(Properties.Directory == id).all()
-    return render_template('select_record2.html', wells=wells)
+    nameFilter = Properties.query.filter(Properties.Directory == id).first()
+    name = nameFilter.Directory
+    return render_template('select_record2.html', wells=wells, name=name)
