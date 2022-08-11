@@ -103,10 +103,10 @@ class Properties(db.Model):
         self.pWave = pWave
         self.sWave = sWave
 
-class AddRecord(FlaskForm):
+class AddProperty(FlaskForm):
     # id used only by update/edit
     id_field = HiddenField()
-    Directory = StringField('Well Name', [ InputRequired()])
+    Directory = HiddenField()
     Depth = StringField('Depth')
     Type = StringField('Rock Type')
     Description = StringField('Description')
@@ -132,7 +132,7 @@ class AddRecord(FlaskForm):
 class DeleteForm(FlaskForm):
     id_field = HiddenField()
     purpose = HiddenField()
-    submit = SubmitField('Delete This Sock')
+    submit = SubmitField('Delete This Record')
 
 def stringdate():
     today = date.today()
@@ -146,8 +146,8 @@ def stringdate():
 def edit_or_delete():
     id = request.form['id']
     choice = request.form['choice']
-    well = Properties.query.filter(Properties.id == id).first()
+    well = Properties.query.filter(Properties.rowid == id).first()
     # two forms in this template
-    form1 = EditForm()
+    form1 = AddProperty()
     form2 = DeleteForm()
     return render_template('edit_or_delete.html', well=well, form1=form1, form2=form2, choice=choice)
