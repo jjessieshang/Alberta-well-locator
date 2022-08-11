@@ -146,7 +146,7 @@ def stringdate():
 def delete_result():
     id = request.form['id_field']
     purpose = request.form['purpose']
-    well = Properties.query.filter(Properties.Depth == id).first()
+    well = Properties.query.filter(Properties.rowid == id).first()
     if purpose == 'delete':
         db.session.delete(well)
         db.session.commit()
