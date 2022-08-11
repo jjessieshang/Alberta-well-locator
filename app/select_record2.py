@@ -116,4 +116,14 @@ def select_record2():
     wells = Properties.query.filter(Properties.Directory == id).all()
     nameFilter = Properties.query.filter(Properties.Directory == id).first()
     name = nameFilter.Directory
-    return render_template('select_record2.html', wells=wells, name=name)
+
+    # depths = []
+    # for well in wells:
+    #     depth = well.split()[0]
+    #     depth = int(depth)
+    #     depths.append(depth)
+
+    # depths.sort()
+
+    #sort the entries in ascending depth
+    return render_template('select_record2.html', wells=wells, name=name) 

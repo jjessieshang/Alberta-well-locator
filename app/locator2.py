@@ -243,6 +243,7 @@ def mapping2():
     well_location_list = df_well_locations.values.tolist()
     well_location_list_size = len(well_location_list)
     
+    # depths = []
 
     #MARKERS, if over a threshold, start clustering well markers
     if display <= 30:
@@ -251,6 +252,13 @@ def mapping2():
             wellInformation = wellProperties[wellProperties["Directory"]==directory.iloc[point]['Directory']]
             wellInformation = wellInformation.reset_index()
             wellInformation = wellInformation.drop('index',axis = 1)
+
+            # depth = wellInformation.iloc[point]['Depth'].split()[0]
+            # depth = int(depth)
+            # depths.append(depth)
+            # depths.sort()
+            # wellInformation['SortDepth'] = depths
+
             wellInformation = wellInformation.sort_values(by = ['Depth'],
                             axis = 0,
                             ascending = True)         
