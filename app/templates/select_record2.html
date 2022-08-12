@@ -1,0 +1,157 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+{{ super() }}
+	<style>
+		body { background: #e8f1f9; }
+		ul { display: flex; }
+	</style>
+{% endblock %}
+
+
+{% block title %}
+Additional Well Properties
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row pb-5">
+    <div class="col-lg-10 mx-lg-auto">
+
+      <h1 class="pt-5 pb-2">
+          {{id}}
+      </h1>
+
+      <p class="lead alert alert-success">Add an Entry of Well Properties</p>
+      <div class="form-group">
+        <button style="margin-left: 25px;" class="btn btn-success"><a style="text-decoration: none; color: #fff;" href="{{ url_for( 'add_property', uwi=id ) }}">Add</a></button>
+      </div>
+      <p class="lead alert alert-success">Or Select a Record to Edit</p>
+
+	  <p class="ml-4"><a href="{{ url_for('database') }}">Return to index.</a></p>
+
+    <!-- start form - not using WTForms here -->
+	  <form method="POST" id="form2" action="{{ url_for('edit_or_delete') }}">
+		<table class="table"> 
+			<tr>
+				<td></td>
+                <td style="font-weight: bold; color: #4880f0;">Property</td>
+                <td style="font-weight: bold; color: #4880f0">Value</td>
+			</tr>
+
+			<!-- here is a for-loop to give us all the socks -->
+			{% for well in wells %}
+            <tr>
+				<td class="center-align"><input type="radio" name="id" value="{{ well.rowid }}" required></td>
+                <td style="font-weight: bold;">Depth</td>
+                <td style="font-weight: bold;">{{ well.Depth }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Type:</td>
+                <td>{{ well.Type}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Description:</td>
+                <td>{{ well.Description}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Additional Notes:</td>
+                <td>{{ well.AdditionalNotes}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Shmin:</td>
+                <td>{{ well.Shmin}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Shmax:</td>
+                <td>{{ well.Shmax}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Vertical Stress:</td>
+                <td>{{ well.VerticalStress}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Temperature:</td>
+                <td>{{ well.Temperature}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Pore Pressure:</td>
+                <td>{{ well.PorePressure}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Young's Modulus:</td>
+                <td>{{ well.YoungsModulus}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Shear Modulus:</td>
+                <td>{{ well.ShearModulus}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Bulk Modulus:</td>
+                <td>{{ well.BulkModulus}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Poisson's Ratio:</td>
+                <td>{{ well.PoissonsRatio}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Cohesive Strength:</td>
+                <td>{{ well.CohesiveStrength}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Friction Angle:</td>
+                <td>{{ well.FrictionAngle}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>P-Wave:</td>
+                <td>{{ well.pWave}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>S-Wave:</td>
+                <td>{{ well.sWave}}</td>
+            </tr>
+
+			{% endfor %}
+		</table>
+
+		<div class="form-group lead alert alert-success pb-4">
+          <p>What do you want to do with the selected record?</p>
+          <div class="form-check form-check-inline">
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="choice" value="edit" required> Edit it</label>
+          </div>
+          <div class="form-check form-check-inline">
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="choice" value="delete" required> Delete it</label>
+          </div>
+        </div>
+        <!-- end form-group -->
+
+		<div class="form-group">
+	        <input class="btn btn-success" type="submit" value="Submit Choice">
+        </div>
+
+		</form>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -3,6 +3,7 @@ from enum import auto
 from inspect import signature
 from app import app
 import folium
+import re
 import sqlite3
 import pandas as pd
 import numpy as np
@@ -31,7 +32,7 @@ def mapping2():
     sc = input_UWI[1]
     twp = input_UWI[2]
 
-    last = input_UWI[3].split('W')
+    last = re.split("w", input_UWI[3], flags=re.IGNORECASE)
     rg = last[0]
     M = last[1]
 
@@ -242,6 +243,7 @@ def mapping2():
     well_location_list = df_well_locations.values.tolist()
     well_location_list_size = len(well_location_list)
     
+    # depths = []
 
     #MARKERS, if over a threshold, start clustering well markers
     if display <= 30:
@@ -250,6 +252,13 @@ def mapping2():
             wellInformation = wellProperties[wellProperties["Directory"]==directory.iloc[point]['Directory']]
             wellInformation = wellInformation.reset_index()
             wellInformation = wellInformation.drop('index',axis = 1)
+
+            # depth = wellInformation.iloc[point]['Depth'].split()[0]
+            # depth = int(depth)
+            # depths.append(depth)
+            # depths.sort()
+            # wellInformation['SortDepth'] = depths
+
             wellInformation = wellInformation.sort_values(by = ['Depth'],
                             axis = 0,
                             ascending = True)         
@@ -293,22 +302,22 @@ def mapping2():
 
             if in_situ==1:
                 situ=True
-                shmin = wellInformation['Minimumhorizontalstress-Shmin'].tolist()
-                shmax = wellInformation['Maximumhorizontalstress(Shmax)'].tolist()
-                sv = wellInformation['Verticalstress(Sv)'].tolist()
+                shmin = wellInformation['Shmin'].tolist()
+                shmax = wellInformation['Shmax'].tolist()
+                sv = wellInformation['VerticalStress'].tolist()
                 temp = wellInformation['Temperature'].tolist()
                 pp = wellInformation['PorePressure'].tolist()
 
             if mechanical==1:
                 mech=True
-                youngs = wellInformation['Youngsmodulus'].tolist()
+                youngs = wellInformation['YoungsModulus'].tolist()
                 shear = wellInformation['ShearModulus'].tolist()
                 bulk = wellInformation['BulkModulus'].tolist()
-                poisson = wellInformation['Poissonsratio'].tolist()
-                cohesive = wellInformation['Cohesivestrength'].tolist()
-                friction = wellInformation['Frictionangle'].tolist()
-                pWave = wellInformation['P-wave'].tolist()
-                sWave = wellInformation['S-wave'].tolist()
+                poisson = wellInformation['PoissonsRatio'].tolist()
+                cohesive = wellInformation['CohesiveStrength'].tolist()
+                friction = wellInformation['FrictionAngle'].tolist()
+                pWave = wellInformation['pWave'].tolist()
+                sWave = wellInformation['sWave'].tolist()
 
             html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, index=index,
                 lith=lith, depth=depth, type=type, description=description, add_notes=add_notes,
@@ -370,22 +379,22 @@ def mapping2():
 
             if in_situ==1:
                 situ=True
-                shmin = wellInformation['Minimumhorizontalstress-Shmin'].tolist()
-                shmax = wellInformation['Maximumhorizontalstress(Shmax)'].tolist()
-                sv = wellInformation['Verticalstress(Sv)'].tolist()
+                shmin = wellInformation['Shmin'].tolist()
+                shmax = wellInformation['Shmax'].tolist()
+                sv = wellInformation['VerticalStress'].tolist()
                 temp = wellInformation['Temperature'].tolist()
                 pp = wellInformation['PorePressure'].tolist()
 
             if mechanical==1:
                 mech=True
-                youngs = wellInformation['Youngsmodulus'].tolist()
+                youngs = wellInformation['YoungsModulus'].tolist()
                 shear = wellInformation['ShearModulus'].tolist()
                 bulk = wellInformation['BulkModulus'].tolist()
-                poisson = wellInformation['Poissonsratio'].tolist()
-                cohesive = wellInformation['Cohesivestrength'].tolist()
-                friction = wellInformation['Frictionangle'].tolist()
-                pWave = wellInformation['P-wave'].tolist()
-                sWave = wellInformation['S-wave'].tolist()
+                poisson = wellInformation['PoissonsRatio'].tolist()
+                cohesive = wellInformation['CohesiveStrength'].tolist()
+                friction = wellInformation['FrictionAngle'].tolist()
+                pWave = wellInformation['pWave'].tolist()
+                sWave = wellInformation['sWave'].tolist()
 
             html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, index=index,
                 lith=lith, depth=depth, type=type, description=description, add_notes=add_notes,

@@ -1,0 +1,36 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+{{ super() }}
+	<style>
+		body { background: #e8f1f9; }
+	</style>
+{% endblock %}
+
+{% block title %}
+BitCan Well Database
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+
+      <h1 class="pt-5 pb-2">Bitcan Well Database</h1>
+
+      <p class="lead">This is the index page for accessing the SQLite database containing an inventory of Bitcan's directory of wells and their properties.</p>
+
+
+	  <!-- links -->
+	  <p>You can <a href="{{ url_for('directory') }}">view BitCan's well directory</a>.</p>
+	  <p>You can <a href="{{ url_for('add_record') }}">add a new well location</a>.</p>
+	  <p>You can <a href="{{ url_for( 'select_record1', letters='AF' ) }}">edit an existing well location</a>.</p>
+	  <p>You can <a href="{{ url_for('home') }}">return to the web app</a>.</p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

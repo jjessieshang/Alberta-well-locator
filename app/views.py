@@ -18,3 +18,8 @@ def form():
 @app.route("/form2/", methods=["POST","GET"])
 def form2():
     return render_template("uwiForm2.html")
+
+@app.route('/database/')
+def database():
+    return render_template('database.html')
+

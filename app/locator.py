@@ -10,58 +10,6 @@ from math import radians, cos, sin, asin, sqrt
 from folium.plugins import Fullscreen, MarkerCluster
 from flask import request, render_template
 
-# conn = sqlite3.connect('ats.sqlite')
-
-# #(executed once to import csv into sqlite)
-# #importing dataframe1
-# ATS = pd.read_csv('~/Desktop/OneDrive - BitCan/Mapping Program/ATS.csv', sep =',')
-# ATS = ATS.drop('Unnamed: 3',axis = 1)
-
-# #importing dataframe2
-# directory = pd.read_csv('~/Desktop/OneDrive - BitCan/Mapping Program/ATS_directory.csv', sep =',')
-# directory = directory.drop('Unnamed: 10',axis = 1)
-# directory = directory.drop('Unnamed: 11',axis = 1)
-# directory = directory.drop('Unnamed: 12',axis = 1)
-# directory = directory.drop('Unnamed: 13',axis = 1)
-# directory = directory.drop('Unnamed: 14',axis = 1)
-# directory = directory.drop('Unnamed: 15',axis = 1)
-# directory = directory.drop('Unnamed: 16',axis = 1)
-# directory = directory.drop('Unnamed: 17',axis = 1)
-# directory = directory.drop(index = 28)
-# directory = directory.drop(index = 29)
-
-# #insert df into sql 
-# ATS.to_sql(
-#     name= 'ATS',
-#     con= conn,
-#     if_exists= 'replace',
-#     index= False,
-#     dtype={'UWI': 'text',
-#            'Latitude': 'real',
-#            'Longitude': 'real'}
-# )
-
-# directory.to_sql(
-#     name= 'directory',
-#     con= conn,
-#     if_exists= 'replace',
-#     index= False,
-#     dtype={'Directory': 'text',
-#            'LSD': 'real',
-#            'SC': 'real',
-#            'TWP': 'real',
-#            'RG': 'real',
-#            'W': 'text',
-#            'M': 'real',
-#            'adjusted_UWI': 'text',
-#            'Latitude': 'real',
-#            'Longitude': 'real',
-#            'Distance (km)': 'real'}
-# )
-
-# conn.commit()
-# conn.close()
-
 
 @app.route('/form/mapping/')
 def mapping():
@@ -72,7 +20,7 @@ def mapping():
     ATS = pd.read_sql_query("SELECT * FROM ats", con=conn)
     directory = pd.read_sql_query("SELECT * FROM directory", con=conn)
     wellProperties = pd.read_sql_query("SELECT * FROM wellProperties", con=conn)
-    conn.close()
+    conn.close() 
 
     #form input
     lsd = request.args.get('lsd')
@@ -337,22 +285,22 @@ def mapping():
 
             if in_situ==1:
                 situ=True
-                shmin = wellInformation['Minimumhorizontalstress-Shmin'].tolist()
-                shmax = wellInformation['Maximumhorizontalstress(Shmax)'].tolist()
-                sv = wellInformation['Verticalstress(Sv)'].tolist()
+                shmin = wellInformation['Shmin'].tolist()
+                shmax = wellInformation['Shmax'].tolist()
+                sv = wellInformation['VerticalStress'].tolist()
                 temp = wellInformation['Temperature'].tolist()
                 pp = wellInformation['PorePressure'].tolist()
 
             if mechanical==1:
                 mech=True
-                youngs = wellInformation['Youngsmodulus'].tolist()
+                youngs = wellInformation['YoungsModulus'].tolist()
                 shear = wellInformation['ShearModulus'].tolist()
                 bulk = wellInformation['BulkModulus'].tolist()
-                poisson = wellInformation['Poissonsratio'].tolist()
-                cohesive = wellInformation['Cohesivestrength'].tolist()
-                friction = wellInformation['Frictionangle'].tolist()
-                pWave = wellInformation['P-wave'].tolist()
-                sWave = wellInformation['S-wave'].tolist()
+                poisson = wellInformation['PoissonsRatio'].tolist()
+                cohesive = wellInformation['CohesiveStrength'].tolist()
+                friction = wellInformation['FrictionAngle'].tolist()
+                pWave = wellInformation['pWave'].tolist()
+                sWave = wellInformation['sWave'].tolist()
 
             html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, index=index,
                 lith=lith, depth=depth, type=type, description=description, add_notes=add_notes,
@@ -416,22 +364,22 @@ def mapping():
 
             if in_situ==1:
                 situ=True
-                shmin = wellInformation['Minimumhorizontalstress-Shmin'].tolist()
-                shmax = wellInformation['Maximumhorizontalstress(Shmax)'].tolist()
-                sv = wellInformation['Verticalstress(Sv)'].tolist()
+                shmin = wellInformation['Shmin'].tolist()
+                shmax = wellInformation['Shmax'].tolist()
+                sv = wellInformation['VerticalStress'].tolist()
                 temp = wellInformation['Temperature'].tolist()
                 pp = wellInformation['PorePressure'].tolist()
 
             if mechanical==1:
                 mech=True
-                youngs = wellInformation['Youngsmodulus'].tolist()
+                youngs = wellInformation['YoungsModulus'].tolist()
                 shear = wellInformation['ShearModulus'].tolist()
                 bulk = wellInformation['BulkModulus'].tolist()
-                poisson = wellInformation['Poissonsratio'].tolist()
-                cohesive = wellInformation['Cohesivestrength'].tolist()
-                friction = wellInformation['Frictionangle'].tolist()
-                pWave = wellInformation['P-wave'].tolist()
-                sWave = wellInformation['S-wave'].tolist()
+                poisson = wellInformation['PoissonsRatio'].tolist()
+                cohesive = wellInformation['CohesiveStrength'].tolist()
+                friction = wellInformation['FrictionAngle'].tolist()
+                pWave = wellInformation['pWave'].tolist()
+                sWave = wellInformation['sWave'].tolist()
 
             html = render_template("popupTable.html", nm=nm, dist=dist, print_dist=print_dist, index=index,
                 lith=lith, depth=depth, type=type, description=description, add_notes=add_notes,

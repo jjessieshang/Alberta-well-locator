@@ -1,0 +1,72 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+{{ super() }}
+	<style>
+		body { background: #e8f1f9; }
+		ul { display: flex; }
+	</style>
+{% endblock %}
+
+
+{% block title %}
+Select a Record
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row pb-5">
+    <div class="col-lg-10 mx-lg-auto">
+
+      <h1 class="pt-5 pb-2">Select a Record</h1>
+
+      <p class="lead alert alert-success">Select one record to edit.</p>
+
+	  <!-- links to display a group of socks, alphabetically -->
+	  <ul class="pl-0">
+		  <li class="text-center list-group-item list-group-item-action"><a href="{{ url_for( 'select_record1', letters='AF' ) }}">A &ndash; E</a></li>
+		  <li class="text-center list-group-item list-group-item-action"><a href="{{ url_for( 'select_record1', letters='FM' ) }}">F &ndash; L</a></li>
+		  <li class="text-center list-group-item list-group-item-action"><a href="{{ url_for( 'select_record1', letters='MS' ) }}">M &ndash; R</a></li>
+		  <li class="text-center list-group-item list-group-item-action"><a href="{{ url_for( 'select_record1', letters='Sa' ) }}">S &ndash; Z</a></li>
+	  </ul>
+
+	  <p class="ml-4"><a href="{{ url_for('database') }}">Return to index.</a></p>
+
+	  <!-- start form - not using WTForms here -->
+	  <form method="POST" id="form2" action="{{ url_for('select_record2') }}">
+
+		<table class="table"> 
+			<tr>
+				<th></th>
+				<th>Directory</th>
+
+			</tr>
+
+			<!-- here is a for-loop to give us all the socks -->
+			{% for well in wells %}
+			<!-- <tr>
+				<td class="center-align"><input type="radio" name="id" value="{{ well.rowid }}" required></td>
+				<td>{{ well.Directory }}</td>
+			</tr> -->
+			<tr>
+				<td class="center-align"><input type="radio" name="id" value="{{ well.Directory }}" required></td>
+				<td>{{ well.Directory }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+
+		<div class="form-group lead alert alert-success pb-4">
+          <p>Is this the record you would like to edit?</p>
+
+		<div class="form-group">
+	        <input class="btn btn-success" type="submit" value="Submit Choice">
+        </div>
+
+		</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
