@@ -240,11 +240,14 @@ def mapping():
         for point in range(0, display):
             #Creating a new dataframe that is a subset of a well site, just different properties at different depths
             wellInformation = wellProperties[wellProperties["Directory"]==directory.iloc[point]['Directory']]
+            wellInformation = wellInformation.assign(A = lambda x: x['Depth'].str.extract('(\d+)'))
             wellInformation = wellInformation.reset_index()
             wellInformation = wellInformation.drop('index',axis = 1)
-            wellInformation = wellInformation.sort_values(by = ['Depth'],
+
+            wellInformation['A'] = wellInformation['A'].astype('int') 
+            wellInformation = wellInformation.sort_values(by = ['A'],
                             axis = 0,
-                            ascending = True)         
+                            ascending = True)            
 
             dist=True
             print_dist=directory.iloc[point]['Print Distance']
@@ -319,11 +322,14 @@ def mapping():
         for point in range(0, well_location_list_size):
             #Creating a new dataframe that is a subset of a well site, just different properties at different depths
             wellInformation = wellProperties[wellProperties["Directory"]==directory.iloc[point]['Directory']]
+            wellInformation = wellInformation.assign(A = lambda x: x['Depth'].str.extract('(\d+)'))
             wellInformation = wellInformation.reset_index()
             wellInformation = wellInformation.drop('index',axis = 1)
-            wellInformation = wellInformation.sort_values(by = ['Depth'],
+
+            wellInformation['A'] = wellInformation['A'].astype('int') 
+            wellInformation = wellInformation.sort_values(by = ['A'],
                             axis = 0,
-                            ascending = True)         
+                            ascending = True)             
 
             dist=True
             print_dist=directory.iloc[point]['Print Distance']
