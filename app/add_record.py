@@ -15,6 +15,7 @@ from wtforms import SubmitField, SelectField, RadioField, HiddenField, StringFie
 from wtforms.validators import DataRequired, InputRequired, Length, Regexp, NumberRange
 from datetime import date
 
+
 # the name of the database; add path if necessary
 # db_name = 'ats.sqlite'
 app.config['SECRET_KEY'] = 'BitCanGeosciences'

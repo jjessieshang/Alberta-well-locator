@@ -10,6 +10,11 @@ from flask_wtf import FlaskForm
 from wtforms import SubmitField, SelectField, RadioField, HiddenField, StringField, IntegerField, FloatField
 from wtforms.validators import DataRequired, InputRequired, Length, Regexp, NumberRange
 from datetime import date
+from flask_basicauth import BasicAuth 
+
+app.config['BASIC_AUTH_USERNAME'] = 'BitCan'
+app.config['BASIC_AUTH_PASSWORD'] = 'Geosciences'
+basic_auth = BasicAuth(app)
 
 # the name of the database; add path if necessary
 # db_name = 'ats.sqlite'
@@ -58,6 +63,7 @@ class Directory(db.Model):
         self.Longitude = Longitude
 
 @app.route('/directory/')
+@basic_auth.required
 def directory():
     uwi = Directory.query.order_by(Directory.Directory).all()
     return render_template('directory.html', uwi=uwi)

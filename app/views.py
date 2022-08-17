@@ -1,5 +1,10 @@
 from app import app
 from flask import render_template
+from flask_basicauth import BasicAuth 
+
+app.config['BASIC_AUTH_USERNAME'] = 'BitCan'
+app.config['BASIC_AUTH_PASSWORD'] = 'Geosciences'
+basic_auth = BasicAuth(app)
 
 @app.route("/")
 @app.route("/home/")
@@ -20,6 +25,7 @@ def form2():
     return render_template("uwiForm2.html")
 
 @app.route('/database/')
+@basic_auth.required
 def database():
     return render_template('database.html')
 
