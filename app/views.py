@@ -9,6 +9,7 @@ basic_auth = BasicAuth(app)
 @app.route("/")
 @app.route("/home/")
 @app.route("/index/")
+@basic_auth.required
 def home():
     return render_template("index.html")
 
@@ -25,7 +26,6 @@ def form2():
     return render_template("uwiForm2.html")
 
 @app.route('/database/')
-@basic_auth.required
 def database():
     return render_template('database.html')
 
