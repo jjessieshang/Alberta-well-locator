@@ -10,7 +10,7 @@ The Alberta Well Locator Program is a data visualisation tool that allows the us
 ## The Map
 The input UWI is displayed as a blue marker and a circle with a radius representing 50 km on the map. Each green marker represents a well location from the database, the name is displayed when the user hovers over it.
 
-<img width="1000" alt="Screen Shot 2022-10-08 at 1 00 39 PM" src="https://user-images.githubusercontent.com/105069660/194726200-ab1a18fe-36db-47f8-ae84-11f874604b73.png">
+<img width="600" alt="Screen Shot 2022-10-08 at 1 00 39 PM" src="https://user-images.githubusercontent.com/105069660/194726200-ab1a18fe-36db-47f8-ae84-11f874604b73.png">
 
 ## Map Features
 Map Tiles            |  Scrollable Popup
