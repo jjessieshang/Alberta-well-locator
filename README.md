@@ -5,6 +5,8 @@ The Alberta Well Locator Program is a data visualisation tool that allows the us
 
 **Tools Used:** Flask, Folium, Python (Pandas, NumPy), SQLite
 
+## Data
+
 ## The Map
 The input UWI is displayed as a blue marker and a circle with a radius representing 50 km on the map. Each green marker represents a well location from the database, the name is displayed when the user hovers over it.
 
@@ -23,3 +25,14 @@ Upon clicking on a well marker, a scrollable popup table will be displayed:
 | Rock Lithology  | Rock type, description, and additional notes |
 | In-Situ  | Stress (minimum and maximum horizontal stress, vertical stress), temperature, and pore pressure.|
 | Mechanical Properties  | Static (Young’s modulus, Bulk’s modulus, Shear modulus, Poisson’s ratio, cohesive strength, friction angle), and dynamic (P-wave, S-wave).|
+
+## Database Manipulation
+
+The Alberta Well Locator Program uses a SQLite file database which is connected to the front-end of the web application. From the front end you can interact with the database in the following ways:
+
+1.	View BitCan’s directory of well locations
+2.	Add new well locations
+3.	Add/Edit/Delete properties of each well location
+
+![Picture1](https://user-images.githubusercontent.com/105069660/194726405-bf3c3a6c-fec2-42f2-80b7-59910e6bf73c.jpg)
+
