@@ -15,8 +15,8 @@ The input UWI is displayed as a blue marker and a circle with a radius represent
 ## Map Features
 ![Screen Shot 2022-10-08 at 1 12 34 PM](https://user-images.githubusercontent.com/105069660/194726245-01260241-30ec-4fc1-bf81-6f839bb6b15c.png)
 
-Upon clicking on a well marker, a scrollable popup table will be displayed:
-<img width="1433" alt="Screen Shot 2022-10-08 at 1 01 49 PM" src="https://user-images.githubusercontent.com/105069660/194726265-6906146b-afab-4adc-84bf-6a80dc9e4a5b.png">
+Upon clicking on a well marker, a scrollable popup table will be displayed:<img width="558" alt="Screen Shot 2022-10-08 at 1 21 47 PM" src="https://user-images.githubusercontent.com/105069660/194726548-11512bbe-1593-46d2-857b-dc1870625048.png">
+
 
 | First Header  | Second Header |
 | ------------- | ------------- |
