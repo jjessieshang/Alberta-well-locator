@@ -1,11 +1,11 @@
-# Alberta_well_locator
+# :earth_americas: Alberta_well_locator
 
 ## Project Description
 The Alberta Well Locator Program is a data visualisation tool that allows the user to interact with BitCan’s directory of well sites. Given any input [Unique Well Identifier](https://www.rigworker.com/well/appendix-unique-well-identifier.html) (UWI), the web app maps the point of interest, calculates the distance between the input UWI and all existing well sites, and displays rock lithology, in-situ, and mechanical properties associated with each well.
 
 **Tools Used:** Flask, Folium, Python (Pandas, NumPy), SQLite
 
-## Data
+## :ballot_box_with_check: Data
 Using Pandas and NumPy, I plotted the [Alberta Dominion Land Survey Grid](https://chinookpetroleum.com/alberta-township-system/) as a planar projection and utilized the [Alberta Township System (ATS) version 4.1 (NAD83)](https://open.alberta.ca/opendata/property-alberta-township-system-ats) dataset to convert the entire set of Unique Well Identifier Numbers to geographical coordinates. This mapping tool then computes the distance between well locations by applying the [Haversine Formula](https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/) for great-circle distance. 
 
 
@@ -38,3 +38,8 @@ The Alberta Well Locator Program uses a SQLite file database which is connected 
 <img width="600" alt="Screen Shot 2022-10-08 at 1 20 44 PM" src="https://user-images.githubusercontent.com/105069660/194726516-34a14c1f-6a3f-484d-980a-d862f0898fc5.png">
 
 ## Future Developments
+Expanding the Well Locator to BitCan's well sites in an Indonesia-based project. 
+Tasks
+1. Find comprehensive geographical coordinate dataset to create planar model of Indonesia
+2. Work with stakeholders to determine well properties of interest
+3. Develop tangential mapping tool
