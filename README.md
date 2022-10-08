@@ -19,15 +19,11 @@ Map Tiles            |  Scrollable Popup
 
 | Feature  | Description |
 | :------------- | :------------- |
-| Distance | Distance between searched UWI and the well, 
-measured in kilometers.|
+| Distance | Distance between searched UWI and the well, measured in kilometers.|
 | Depth  | Data entries are sorted in ascending order based on depth.|
 | Rock Lithology  | Rock type, description, and additional notes |
-| In-Situ  | Stress (minimum and maximum horizontal stress, vertical stress), 
-temperature, and pore pressure.|
-| Mechanical Properties  | Static (Young’s modulus, Bulk’s modulus, 
-Shear modulus, Poisson’s ratio, cohesive strength, friction angle), 
-and dynamic (P-wave, S-wave).|
+| In-Situ  | Stress (minimum and maximum horizontal stress, vertical stress), temperature, and pore pressure.|
+| Mechanical Properties  | Static (Young’s modulus, Bulk’s modulus, Shear modulus, Poisson’s ratio, cohesive strength, friction angle), and dynamic (P-wave, S-wave).|
 
 ## Database Manipulation
 
