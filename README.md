@@ -10,14 +10,14 @@ The Alberta Well Locator Program is a data visualisation tool that allows the us
 ## The Map
 The input UWI is displayed as a blue marker and a circle with a radius representing 50 km on the map. Each green marker represents a well location from the database, the name is displayed when the user hovers over it.
 
-<img width="600" alt="Screen Shot 2022-10-08 at 1 00 39 PM" src="https://user-images.githubusercontent.com/105069660/194726200-ab1a18fe-36db-47f8-ae84-11f874604b73.png">
+<img width="900" alt="Screen Shot 2022-10-08 at 1 00 39 PM" src="https://user-images.githubusercontent.com/105069660/194726200-ab1a18fe-36db-47f8-ae84-11f874604b73.png">
 
 ## Map Features
 Map Tiles            |  Scrollable Popup
 :-------------------------:|:-------------------------:
 ![Screen Shot 2022-10-08 at 1 12 34 PM](https://user-images.githubusercontent.com/105069660/194726245-01260241-30ec-4fc1-bf81-6f839bb6b15c.png)  |  <img width="558" alt="Screen Shot 2022-10-08 at 1 21 47 PM" src="https://user-images.githubusercontent.com/105069660/194726548-11512bbe-1593-46d2-857b-dc1870625048.png">
 
-
+<div style="width:290px">
 | Feature  | Description |
 | ------------- | ------------- |
 | Distance | Distance between searched UWI and the well, measured in kilometers.|
@@ -25,6 +25,7 @@ Map Tiles            |  Scrollable Popup
 | Rock Lithology  | Rock type, description, and additional notes |
 | In-Situ  | Stress (minimum and maximum horizontal stress, vertical stress), temperature, and pore pressure.|
 | Mechanical Properties  | Static (Young’s modulus, Bulk’s modulus, Shear modulus, Poisson’s ratio, cohesive strength, friction angle), and dynamic (P-wave, S-wave).|
+  </div>
 
 ## Database Manipulation
 
