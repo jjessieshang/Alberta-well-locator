@@ -34,5 +34,6 @@ The Alberta Well Locator Program uses a SQLite file database which is connected 
 2.	Add new well locations
 3.	Add/Edit/Delete properties of each well location
 
-![Picture1](https://user-images.githubusercontent.com/105069660/194726405-bf3c3a6c-fec2-42f2-80b7-59910e6bf73c.jpg)
+<img width="944" alt="Screen Shot 2022-10-08 at 1 20 44 PM" src="https://user-images.githubusercontent.com/105069660/194726516-34a14c1f-6a3f-484d-980a-d862f0898fc5.png">
+
 
