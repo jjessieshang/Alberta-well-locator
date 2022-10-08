@@ -15,15 +15,19 @@ The input UWI is displayed as a blue marker and a circle with a radius represent
 ## Map Features
 Map Tiles            |  Scrollable Popup
 :-------------------------:|:-------------------------:
-![Screen Shot 2022-10-08 at 1 12 34 PM](https://user-images.githubusercontent.com/105069660/194726245-01260241-30ec-4fc1-bf81-6f839bb6b15c.png {width=200px} ) |  <img width="558" alt="Screen Shot 2022-10-08 at 1 21 47 PM" src="https://user-images.githubusercontent.com/105069660/194726548-11512bbe-1593-46d2-857b-dc1870625048.png">
+![Screen Shot 2022-10-08 at 1 12 34 PM](https://user-images.githubusercontent.com/105069660/194726245-01260241-30ec-4fc1-bf81-6f839bb6b15c.png  ) |  <img width="558" alt="Screen Shot 2022-10-08 at 1 21 47 PM" src="https://user-images.githubusercontent.com/105069660/194726548-11512bbe-1593-46d2-857b-dc1870625048.png">
 
 | Feature  | Description |
-| ------------- | ------------- |
-| Distance | Distance between searched UWI and the well, measured in kilometers.|
+| :------------- | :------------- |
+| Distance | Distance between searched UWI and the well, 
+measured in kilometers.|
 | Depth  | Data entries are sorted in ascending order based on depth.|
 | Rock Lithology  | Rock type, description, and additional notes |
-| In-Situ  | Stress (minimum and maximum horizontal stress, vertical stress), temperature, and pore pressure.|
-| Mechanical Properties  | Static (Young’s modulus, Bulk’s modulus, Shear modulus, Poisson’s ratio, cohesive strength, friction angle), and dynamic (P-wave, S-wave).|
+| In-Situ  | Stress (minimum and maximum horizontal stress, vertical stress), 
+temperature, and pore pressure.|
+| Mechanical Properties  | Static (Young’s modulus, Bulk’s modulus, 
+Shear modulus, Poisson’s ratio, cohesive strength, friction angle), 
+and dynamic (P-wave, S-wave).|
 
 ## Database Manipulation
 
